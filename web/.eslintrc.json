@@ -1,0 +1,55 @@
+{
+  /*所使用的环境*/
+  "env": {
+    /*浏览器环境全局变量*/
+    "browser": true,
+    "commonjs": true,
+    /*Node环境全局变量*/
+    "node": true,
+    "es6": true
+  },
+  "parser": "vue-eslint-parser",
+  "parserOptions": {
+    "parser": "@typescript-eslint/parser",
+    "sourceType": "module"
+  },
+  "rules": {
+    "no-console": "warn",
+    "no-alert": "error",
+    "no-await-in-loop": "error",
+    "no-const-assign": "error",
+    "no-ex-assign": "error",
+    "no-func-assign": "error",
+    /*no dupe*/
+    "no-dupe-args": "error",
+    "no-dupe-keys": "error",
+    /*no use*/
+    "no-unused-vars": "error",
+    "no-useless-call": "error",
+    "no-useless-return": "error",
+    /*style*/
+    "max-lines": "off",
+    "camelcase": ["warn", {
+      "properties": "always",
+      "ignoreGlobals": true
+    }],
+    "quotes": ["warn", "single"],
+    "no-tabs": "warn",
+    "max-len": ["off", {
+      "tabWidth": 4
+    }],
+    "new-parens": ["warn", "always"],
+    "no-multi-spaces": ["warn", {
+      "exceptions": {
+        "Property": true
+      }
+    }],
+    "no-mixed-spaces-and-tabs": "warn",
+    "semi-style": ["warn", "last"],
+    "switch-colon-spacing": ["warn", {
+      "after": true
+    }],
+    "no-extra-semi": "warn",
+    "semi": ["error", "never"]
+  }
+}

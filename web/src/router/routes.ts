@@ -1,4 +1,6 @@
 import type { RouteRecordRaw } from 'vue-router'
+import AuthLogin from '@/views/auth/modules/login.vue'
+import ModuleQuestion from '@/views/question/question.vue'
 
 export const ROUTE_NAME = {
     authLogin: 'auth_login',
@@ -22,7 +24,7 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: 'modules/:id',
                 name: ROUTE_NAME.modules,
-                component: () => import('@/views/question/question.vue'),
+                component: ModuleQuestion,
                 meta: {
                     requireAuth: true
                 }
@@ -44,7 +46,7 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: '',
                 name: ROUTE_NAME.authLogin,
-                component: () => import('@/views/auth/modules/login.vue')
+                component: AuthLogin
             }
         ]
     },

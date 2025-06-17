@@ -5,13 +5,15 @@ import LayoutHeader from './header.vue'
 <template>
   <div class="layout-container">
     <LayoutHeader class="sticky top-0 left-0 w-full"></LayoutHeader>
-    <div class="layout-content">
-      <RouterView v-slot="{ Component }">
-        <Transition  name="layout-page-transition" mode="out-in">
-          <component :is="Component" />
-        </Transition>
-      </RouterView>
-    </div>
+    <NScrollbar class="flex-1" content-class="h-full bg-[#f2f2f2]">
+      <div class="layout-content">
+          <RouterView v-slot="{ Component }">
+            <Transition  name="layout-page-transition" mode="out-in">
+              <component :is="Component" />
+            </Transition>
+          </RouterView>
+      </div>
+    </NScrollbar>
     <div class="absolute self-center bottom-0 p-1 text-center text-gray-500 text-[0.5rem]">
       Website Powered By <a href="https://github.com/YeuGmiko" target="_blank">葉羽.Gmiko</a>
     </div>
@@ -31,14 +33,13 @@ import LayoutHeader from './header.vue'
 .layout-container {
   position: relative;
   display: flex;
-  min-height: 100dvh;
+  height: 100dvh;
   flex-direction: column;
+  overflow: hidden;
 
   .layout-content {
-    flex: 1;
     display: flex;
     flex-direction: column;
-    background-color: rgba(0, 0, 0, 0.05);
   }
 }
 </style>

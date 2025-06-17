@@ -5,7 +5,7 @@ import LayoutHeader from './header.vue'
 <template>
   <div class="layout-container">
     <LayoutHeader class="sticky top-0 left-0 w-full"></LayoutHeader>
-    <NScrollbar class="flex-1" content-class="h-full bg-[#f2f2f2]">
+    <NScrollbar class="flex-1" content-class="h-full">
       <div class="layout-content">
           <RouterView v-slot="{ Component }">
             <Transition  name="layout-page-transition" mode="out-in">
@@ -36,6 +36,7 @@ import LayoutHeader from './header.vue'
   height: 100dvh;
   flex-direction: column;
   overflow: hidden;
+  background-color: #f2f2f2;
 
   .layout-content {
     display: flex;

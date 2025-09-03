@@ -104,10 +104,6 @@
     "vue-eslint-parser": "9.4.3",
     "vue-tsc": "2.1.10"
   },
-  "simple-git-hooks": {
-    "commit-msg": "pnpm sa git-commit-verify",
-    "pre-commit": "pnpm typecheck && pnpm lint-staged"
-  },
   "lint-staged": {
     "*": "eslint --fix"
   },

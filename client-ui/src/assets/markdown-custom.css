@@ -1,0 +1,20 @@
+/* markdown editor area style */
+.md-editor-previewOnly {
+    padding: 5px;
+    border-radius: 4px;
+}
+.option-order {
+    --theme-color: #cc7cee;
+
+    margin: 0 5px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    line-height: 1;
+    border: 2px solid var(--theme-color);
+    background-color: white;
+    color: var(--theme-color);
+    border-radius: 26px;
+}

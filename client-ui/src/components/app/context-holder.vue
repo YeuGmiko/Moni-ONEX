@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { onMounted } from 'vue'
-import { useDialog, useLoadingBar, useMessage, useNotification } from 'naive-ui'
+import { useMessage } from 'naive-ui'
 
 function register() {
   // window.$loadingBar = useLoadingBar();

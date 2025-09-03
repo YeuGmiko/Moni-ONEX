@@ -87,38 +87,6 @@ export const generatedRoutes: GeneratedRoute[] = [
     }
   },
   {
-    name: 'task',
-    path: '/task',
-    component: 'layout.base',
-    meta: {
-      title: 'task',
-      i18nKey: 'route.task',
-      icon: 'mingcute:task-line'
-    },
-    children: [
-      {
-        name: 'task_config',
-        path: '/task/config',
-        component: 'view.task_config',
-        meta: {
-          title: 'task_config',
-          i18nKey: 'route.task_config',
-          icon: 'mingcute:settings-6-line'
-        }
-      },
-      {
-        name: 'task_rank',
-        path: '/task/rank',
-        component: 'view.task_rank',
-        meta: {
-          title: 'task_rank',
-          i18nKey: 'route.task_rank',
-          icon: 'lucide:list-ordered'
-        }
-      }
-    ]
-  },
-  {
     name: 'user-manager',
     path: '/user-manager',
     component: 'layout.base',

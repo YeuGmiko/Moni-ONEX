@@ -170,9 +170,6 @@ const routeMap: RouteMap = {
   "iframe-page": "/iframe-page/:url",
   "login": "/login/:module(pwd-login|code-login|register|reset-pwd|bind-wechat)?",
   "questions": "/questions",
-  "task": "/task",
-  "task_config": "/task/config",
-  "task_rank": "/task/rank",
   "user-manager": "/user-manager",
   "user-manager_admin-user": "/user-manager/admin-user",
   "user-manager_common-user": "/user-manager/common-user"

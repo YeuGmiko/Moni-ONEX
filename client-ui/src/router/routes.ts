@@ -6,8 +6,7 @@ export const ROUTE_NAME = {
     authLogin: 'auth_login',
     layout: 'layout',
     home: 'home',
-    modules: 'modules',
-    task: 'task'
+    modules: 'modules'
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -25,14 +24,6 @@ export const routes: RouteRecordRaw[] = [
                 path: 'modules/:id',
                 name: ROUTE_NAME.modules,
                 component: ModuleQuestion,
-                meta: {
-                    requireAuth: true
-                }
-            },
-            {
-                path: 'task/:id',
-                name: ROUTE_NAME.task,
-                component: () => import('@/views/task/task.vue'),
                 meta: {
                     requireAuth: true
                 }

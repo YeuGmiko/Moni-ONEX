@@ -60,38 +60,3 @@ export interface PostQuestionOption {
     orderNo: number
     answer: string
 }
-/* task */
-export type TaskOrder = OrderProperties
-
-export interface Task {
-    id: string
-    title: string
-    content: string
-    displayOrder: number
-    optionsLen: number
-    moduleId: string
-    moduleName: string
-    moduleLabel: string
-    themeColor: string
-    // 题目完成状态：0未提交，1部分/全部错误，2全部正确
-    accomplishStatus: number
-    userSubmits: TaskSubmit[]
-    createTime: string
-}
-
-export interface TaskSubmit {
-    id: string
-    orderNo: number
-    userAnswer: string
-}
-
-export interface TaskAnswer {
-    id: string
-    orderNo: number
-    answer: string
-}
-
-export interface PostTaskOption {
-    orderNo: number
-    answer: string
-}

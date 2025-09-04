@@ -10,7 +10,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/moni_one_x?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&connectionCollation=utf8_bin
     username: root
-    password: YeuGmiko
+    password: PASSWORD
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss # 时间格式
     time-zone: GMT+8                 # 时区

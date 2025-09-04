@@ -5,10 +5,10 @@ import type { FormInst, FormRules } from 'naive-ui'
 import { MdPreview } from 'md-editor-v3'
 import { computed, onMounted, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import {
+import type {
   Module,
   OrderProperties, PostQuestionOption,
-  PostTaskOption, Question, QuestionAnswer,
+  Question, QuestionAnswer,
 } from '@/server/api/types'
 import { ROUTE_NAME } from '@/router/routes'
 import { copyText } from '@/utils/system'
@@ -17,7 +17,7 @@ import QuestionOrders from '@/components/common/question-orders.vue'
 import {fetchQuestion, postQuestionSubmits} from '@/server/api/questions'
 import {fetchModule} from '@/server/api/modules'
 
-
+const requestError = ref<boolean>(false)
 const isModuleLoading = ref<boolean>(false)
 const isQuestionLoading = ref<boolean>(false)
 const submitFormRef = ref<FormInst>()
@@ -43,7 +43,7 @@ async function initQuestion() {
 async function getModule(id: string) {
   if (!id) return Promise.reject(new Error('id is required'))
   else if (module.value && module.value.id == id)
-    isModuleLoading.value = true
+  isModuleLoading.value = true
   const { data: responseData, error } = await fetchModule(id)
   isModuleLoading.value = false
   if (error || !responseData) return Promise.reject(error ?? new Error( 'no data'))
@@ -63,7 +63,7 @@ async function submitAnswer(options: PostQuestionOption[]) {
   if (error) return Promise.reject(error)
   await getQuestion(question.value.id)
 }
-const model = ref<Record<string, PostTaskOption>>({})
+const model = ref<Record<string, PostQuestionOption>>({})
 const modelRules = computed<FormRules>(() => {
   return Object.entries(model.value).reduce((rules, current) => {
     const [key, option] = current
@@ -91,16 +91,22 @@ const route = useRoute()
 const router = useRouter()
 
 async function init() {
-  if (submitFormRef.value) submitFormRef.value.restoreValidation()
-  await initQuestion()
-  const moduleId = route.params.id as string
-  if (!moduleId) return
-  await getModule(moduleId)
-  await getQuestionByQuery()
+  try {
+    if (submitFormRef.value) submitFormRef.value.restoreValidation()
+    await initQuestion()
+    const moduleId = route.params.id as string
+    if (!moduleId) return
+    await getModule(moduleId)
+    await getQuestionByQuery()
+  } catch {
+    requestError.value = true
+    isQuestionLoading.value = false
+    isModuleLoading.value = false
+  }
 }
 
 async function getQuestionByQuery() {
-  if (isQuestionLoading.value || isQuestionLoading.value) return
+  if (isQuestionLoading.value || isModuleLoading.value) return
   const { question } = route.query
   if (!question) return
   await getQuestion(question as string)
@@ -161,7 +167,7 @@ watch(question, async question => {
   }, {})
 })
 /* 页面更换 / 刷新的时候，触发题目信息获取*/
-watch(route, getQuestionByQuery, { immediate: true })
+watch(route, init)
 /* 检测是否已经提交，若提交则重新渲染表单 */
 watch(isSubmit, isSubmit => {
   if (!isSubmit || !question.value) return
@@ -185,14 +191,16 @@ onMounted(init)
       <span class="router-back w-[max-content]" @click="routerToHome">
         <Icon class="icon" name="ri-arrow-go-back-fill"></Icon>
         <span class="text">返回首页</span>
+        {{ isModuleLoading }}
+        {{ isQuestionLoading }}
       </span>
-      <div v-if="isQuestionLoading || isModuleLoading"
-        class="flex-grow flex flex-col justify-center items-center">
-        <Icon name="ri-loader-2-line" :scale="2" animation="spin" speed="slow"></Icon>
-        <p class="mt-1 text-[18px]">题目加载中，请稍等...</p>
+      <!--题目加载失败 -->
+      <div v-if="requestError" class="flex-grow flex flex-col justify-center items-center">
+        <Icon name="fc-disclaimer" :scale="6" fill="#fffff"></Icon>
+        <p class="text-xl">该题目不存在或不允许被查看</p>
       </div>
-      <!-- 题目内容 -->
-      <template v-else-if="question">
+      <!--题目内容 -->
+      <template v-if="(!isQuestionLoading || !isModuleLoading) && question">
         <h2>{{ question.title }}</h2>
         <MdPreview id="md-preview" :modelValue="markdown" noMermaid></MdPreview>
         <h2>答题</h2>
@@ -229,9 +237,10 @@ onMounted(init)
           </NFormItem>
         </NForm>
       </template>
+      <!--题目加载中 -->
       <div v-else class="flex-grow flex flex-col justify-center items-center">
-        <Icon name="fc-disclaimer" :scale="6" fill="#fffff"></Icon>
-        <p class="text-xl">该题目不存在或不允许被查看</p>
+        <Icon name="ri-loader-2-line" :scale="2" animation="spin" speed="slow"></Icon>
+        <p class="mt-1 text-[18px]">题目加载中，请稍等...</p>
       </div>
     </div>
     <div v-if="module && question">

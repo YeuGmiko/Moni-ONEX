@@ -1,4 +1,4 @@
-package uno.moni.onex.common.base
+package uno.moni.onex.core.base
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl

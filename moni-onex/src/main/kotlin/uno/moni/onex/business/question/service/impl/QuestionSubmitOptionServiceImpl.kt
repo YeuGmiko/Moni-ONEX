@@ -8,7 +8,7 @@ import uno.moni.onex.business.question.pojo.domain.QuestionOption
 import uno.moni.onex.business.question.pojo.domain.QuestionSubmitOption
 import uno.moni.onex.business.question.pojo.vo.QuestionSubmitOptionVo
 import uno.moni.onex.business.question.service.QuestionSubmitOptionService
-import uno.moni.onex.common.base.BaseServiceImpl
+import uno.moni.onex.core.base.BaseServiceImpl
 
 @Service
 class QuestionSubmitOptionServiceImpl(private val questionOptionMapper: QuestionOptionMapper) : QuestionSubmitOptionService, BaseServiceImpl<QuestionSubmitOptionMapper, QuestionSubmitOption>() {

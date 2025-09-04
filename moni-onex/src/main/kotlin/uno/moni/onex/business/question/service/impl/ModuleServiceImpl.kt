@@ -10,8 +10,8 @@ import uno.moni.onex.business.question.pojo.dto.BuildModule
 import uno.moni.onex.business.question.pojo.vo.ModuleVo
 import uno.moni.onex.business.question.service.ModuleService
 import uno.moni.onex.business.question.service.QuestionOrderService
-import uno.moni.onex.common.base.BaseServiceImpl
-import uno.moni.onex.common.core.util.SecureUtils
+import uno.moni.onex.core.base.BaseServiceImpl
+import uno.moni.onex.core.core.util.SecureUtils
 import uno.moni.onex.open.vo.ModuleOpenVo
 
 @Service

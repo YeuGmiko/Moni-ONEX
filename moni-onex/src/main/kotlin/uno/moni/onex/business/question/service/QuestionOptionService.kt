@@ -3,9 +3,8 @@ package uno.moni.onex.business.question.service
 import uno.moni.onex.business.question.pojo.domain.QuestionOption
 import uno.moni.onex.business.question.pojo.dto.BuildQuestionOption
 import uno.moni.onex.business.question.pojo.dto.CreateQuestionOption
-import uno.moni.onex.business.question.pojo.dto.UpdateQuestion
 import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
-import uno.moni.onex.common.base.BaseService
+import uno.moni.onex.core.base.BaseService
 
 interface QuestionOptionService: BaseService<QuestionOption> {
     fun loadByQuestionId(questionId: String): List<QuestionOptionVo>

@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController
 import uno.moni.onex.business.question.pojo.dto.BuildModule
 import uno.moni.onex.business.question.pojo.vo.ModuleVo
 import uno.moni.onex.business.question.service.ModuleService
-import uno.moni.onex.common.pojo.vo.Response
+import uno.moni.onex.core.pojo.vo.Response
 
 @RestController("AdminModuleController")
 @RequestMapping("/admin/modules")

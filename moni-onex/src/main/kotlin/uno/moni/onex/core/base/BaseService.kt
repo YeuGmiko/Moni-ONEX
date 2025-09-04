@@ -1,4 +1,4 @@
-package uno.moni.onex.common.base
+package uno.moni.onex.core.base
 
 import com.baomidou.mybatisplus.extension.service.IService
 

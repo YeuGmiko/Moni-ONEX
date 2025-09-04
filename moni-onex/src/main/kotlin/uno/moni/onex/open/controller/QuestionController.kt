@@ -14,7 +14,7 @@ import uno.moni.onex.business.question.pojo.dto.BuildQuestionOption
 import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionSubmitOptionVo
 import uno.moni.onex.business.question.service.QuestionService
-import uno.moni.onex.common.pojo.vo.Response
+import uno.moni.onex.core.pojo.vo.Response
 import uno.moni.onex.open.vo.OpenQuestionVo
 
 @RestController

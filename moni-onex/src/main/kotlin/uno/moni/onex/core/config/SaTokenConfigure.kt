@@ -1,4 +1,4 @@
-package uno.moni.onex.common.config
+package uno.moni.onex.core.config
 
 import cn.dev33.satoken.interceptor.SaInterceptor
 import org.springframework.context.annotation.Configuration

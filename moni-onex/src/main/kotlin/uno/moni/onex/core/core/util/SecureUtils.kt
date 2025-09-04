@@ -1,4 +1,4 @@
-package uno.moni.onex.common.core.util
+package uno.moni.onex.core.core.util
 
 import cn.hutool.core.util.IdUtil
 import cn.hutool.core.util.RandomUtil

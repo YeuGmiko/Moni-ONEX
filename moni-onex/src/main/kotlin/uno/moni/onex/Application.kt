@@ -4,7 +4,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.transaction.annotation.EnableTransactionManagement
-import uno.moni.onex.common.core.util.IpUtils
+import uno.moni.onex.core.core.util.IpUtils
 
 @SpringBootApplication
 @EnableTransactionManagement

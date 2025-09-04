@@ -18,7 +18,7 @@ import uno.moni.onex.admin.pojo.vo.UserVo
 import uno.moni.onex.business.user.enums.UserTypeEnums
 import uno.moni.onex.business.user.service.UserService
 import uno.moni.onex.business.user.pojo.domain.User
-import uno.moni.onex.common.pojo.vo.Response
+import uno.moni.onex.core.pojo.vo.Response
 
 @RestController("AdminUserController")
 @RequestMapping("/admin/users")

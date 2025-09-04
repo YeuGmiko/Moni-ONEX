@@ -19,7 +19,7 @@ import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionVo
 import uno.moni.onex.business.question.service.QuestionOptionService
 import uno.moni.onex.business.question.service.QuestionService
-import uno.moni.onex.common.pojo.vo.Response
+import uno.moni.onex.core.pojo.vo.Response
 
 @RestController("AdminQuestionController")
 @RequestMapping("/admin/modules")

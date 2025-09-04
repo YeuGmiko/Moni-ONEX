@@ -1,4 +1,4 @@
-package uno.moni.onex.common.enums
+package uno.moni.onex.core.enums
 
 enum class ResponseCodeEnums(
     val code: Int,

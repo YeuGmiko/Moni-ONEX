@@ -9,7 +9,7 @@ import uno.moni.onex.business.question.pojo.dto.UpdateQuestion
 import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionSubmitOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionVo
-import uno.moni.onex.common.base.BaseService
+import uno.moni.onex.core.base.BaseService
 import uno.moni.onex.open.vo.OpenQuestionVo
 import uno.moni.onex.open.vo.QuestionOrderOpenVo
 

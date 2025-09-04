@@ -3,7 +3,7 @@ package uno.moni.onex.business.question.service
 import uno.moni.onex.business.question.pojo.domain.ModuleDomain
 import uno.moni.onex.business.question.pojo.dto.BuildModule
 import uno.moni.onex.business.question.pojo.vo.ModuleVo
-import uno.moni.onex.common.base.BaseService
+import uno.moni.onex.core.base.BaseService
 import uno.moni.onex.open.vo.ModuleOpenVo
 
 interface ModuleService: BaseService<ModuleDomain> {

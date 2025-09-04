@@ -3,7 +3,7 @@ package uno.moni.onex.business.user.service
 import uno.moni.onex.admin.pojo.dto.CreateUser
 import uno.moni.onex.admin.pojo.vo.UserVo
 import uno.moni.onex.business.user.pojo.dto.BuildUser
-import uno.moni.onex.common.base.BaseService
+import uno.moni.onex.core.base.BaseService
 import uno.moni.onex.business.user.pojo.domain.User
 
 interface UserService: BaseService<User> {

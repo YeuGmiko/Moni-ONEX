@@ -7,9 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
-import uno.moni.onex.business.question.pojo.vo.ModuleVo
 import uno.moni.onex.business.question.service.ModuleService
-import uno.moni.onex.common.pojo.vo.Response
+import uno.moni.onex.core.pojo.vo.Response
 import uno.moni.onex.open.vo.ModuleOpenVo
 
 @RestController

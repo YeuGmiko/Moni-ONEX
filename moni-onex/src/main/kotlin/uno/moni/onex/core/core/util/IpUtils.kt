@@ -1,4 +1,4 @@
-package uno.moni.onex.common.core.util
+package uno.moni.onex.core.core.util
 
 import java.net.Inet4Address
 import java.net.NetworkInterface

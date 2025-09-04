@@ -8,8 +8,8 @@ import uno.moni.onex.admin.pojo.vo.UserVo
 import uno.moni.onex.business.user.enums.UserTypeEnums
 import uno.moni.onex.business.user.pojo.dto.BuildUser
 import uno.moni.onex.business.user.service.UserService
-import uno.moni.onex.common.base.BaseServiceImpl
-import uno.moni.onex.common.core.util.SecureUtils
+import uno.moni.onex.core.base.BaseServiceImpl
+import uno.moni.onex.core.core.util.SecureUtils
 import uno.moni.onex.business.user.mapper.UserMapper
 import uno.moni.onex.business.user.pojo.domain.User
 

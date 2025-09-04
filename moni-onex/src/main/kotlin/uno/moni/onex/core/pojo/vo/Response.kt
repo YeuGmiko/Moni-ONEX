@@ -1,4 +1,4 @@
-package uno.moni.onex.common.pojo.vo
+package uno.moni.onex.core.pojo.vo
 
 import java.io.Serializable
 

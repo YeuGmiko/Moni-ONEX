@@ -46,10 +46,6 @@ dependencies {
     implementation("cn.hutool:hutool-core:5.8.37")
     implementation("cn.hutool:hutool-crypto:5.8.37")
     implementation("cn.hutool:hutool-extra:5.8.37")
-    implementation("com.sun.mail:jakarta.mail:2.0.1")
-    /* excel */
-    implementation("org.apache.poi:poi:5.2.3")
-    implementation("org.apache.poi:poi-ooxml:5.2.3")
 }
 
 tasks.test {

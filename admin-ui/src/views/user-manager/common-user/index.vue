@@ -5,10 +5,9 @@ import { NButton, NPopconfirm, useMessage } from 'naive-ui';
 import { useTable } from '@/hooks/common/table';
 import type { UserInfo } from '@/service/api/user';
 import { deleteCommonUser, fetchCommonUserList } from '@/service/api/user';
-import Upload from '@/views/user-manager/common-user/_modules/_upload/index.vue';
+import UploadCommonUser from '@/views/user-manager/common-user/_modules/UploadCommonUser.vue';
 import Search from './_modules/search.vue';
 import Add from './_modules/add.vue';
-import UploadCommonUser from '@/views/user-manager/common-user/_modules/UploadCommonUser.vue';
 
 const message = useMessage();
 const checkedKeys = ref<DataTableRowKey[]>([]);

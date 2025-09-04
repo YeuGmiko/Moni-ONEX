@@ -191,8 +191,6 @@ onMounted(init)
       <span class="router-back w-[max-content]" @click="routerToHome">
         <Icon class="icon" name="ri-arrow-go-back-fill"></Icon>
         <span class="text">返回首页</span>
-        {{ isModuleLoading }}
-        {{ isQuestionLoading }}
       </span>
       <!--题目加载失败 -->
       <div v-if="requestError" class="flex-grow flex flex-col justify-center items-center">

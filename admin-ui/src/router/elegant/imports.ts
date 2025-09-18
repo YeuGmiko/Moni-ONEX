@@ -23,6 +23,5 @@ export const views: Record<LastLevelRouteKey, RouteComponent | (() => Promise<Ro
   home: () => import("@/views/home/index.vue"),
   questions: () => import("@/views/questions/index.vue"),
   "user-manager_admin-user": () => import("@/views/user-manager/admin-user/index.vue"),
-  "user-manager_common-user": () => import("@/views/user-manager/common-user/_modules/_upload/index.vue"),
   "user-manager_common-user": () => import("@/views/user-manager/common-user/index.vue"),
 };

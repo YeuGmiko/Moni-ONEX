@@ -4,8 +4,8 @@ import type { DataTableColumns } from 'naive-ui';
 import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
 import { useTable } from '@/hooks/common/table';
 import QuestionDataTable from '@/views/questions/_modules/QuestionDataTable.vue';
-import type { Module } from '@/service/api/question';
-import { deleteModule, fetchModules } from '@/service/api/question';
+import type { Module } from '@/service/api';
+import { deleteModule, fetchModules } from '@/service/api';
 import UpdateModule from '@/views/questions/_modules/UpdateModule.vue';
 import AddModule from './_modules/AddModule.vue';
 

@@ -2,8 +2,8 @@
 import { reactive, ref, toRefs, watch } from 'vue';
 import type { FormInst, FormRules } from 'naive-ui';
 import { useMessage } from 'naive-ui';
-import type { PostModule } from '@/service/api/question';
-import { fetchModule, updateModule } from '@/service/api/question';
+import type { PostModule } from '@/service/api/module';
+import { fetchModule, updateModule } from '@/service/api/module';
 
 const message = useMessage();
 const showModel = defineModel<boolean>('show', {

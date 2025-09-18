@@ -39,9 +39,7 @@ class QuestionServiceImpl(
     private val questionMapper: QuestionMapper,
     private val questionSubmitOptionService: QuestionSubmitOptionService,
     private val questionOptionService: QuestionOptionService,
-    private val questionOrderServiceImpl: QuestionOrderServiceImpl,
     private val questionOrderService: QuestionOrderService,
-    private val moduleService: ModuleService,
 ) : QuestionService, BaseServiceImpl<QuestionMapper, Question>() {
     override fun loadByModuleId(moduleId: String): List<QuestionVo> {
         val wrapper = KtQueryWrapper(Question::class.java).eq(Question::moduleId, moduleId)

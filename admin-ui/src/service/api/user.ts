@@ -15,21 +15,21 @@ export interface UserInfo {
 
 export function fetchCommonUserList() {
   return request<UserInfo[]>({
-    url: '/users/common',
+    url: '/admin/users/common',
     method: 'GET'
   });
 }
 
 export function fetchAdminUserList() {
   return request<UserInfo[]>({
-    url: '/users/admin',
+    url: '/admin/users/admin',
     method: 'GET'
   });
 }
 
 export function postCommonUser(body: CreateUser) {
   return request({
-    url: '/users/common',
+    url: '/admin/users/common',
     method: 'POST',
     data: body
   });
@@ -37,7 +37,7 @@ export function postCommonUser(body: CreateUser) {
 
 export function postCommonUserBatch(body: CreateUser[]) {
   return request({
-    url: '/users/common/batch',
+    url: '/admin/users/common/batch',
     method: 'POST',
     data: body
   });
@@ -45,7 +45,7 @@ export function postCommonUserBatch(body: CreateUser[]) {
 
 export function postAdminUser(body: CreateUser) {
   return request({
-    url: '/users/admin',
+    url: '/admin/users/admin',
     method: 'POST',
     data: body
   });
@@ -53,7 +53,7 @@ export function postAdminUser(body: CreateUser) {
 
 export function postCommonUserList(list: CreateUser[]) {
   return request({
-    url: '/users/common/upload',
+    url: '/admin/users/common/upload',
     method: 'POST',
     data: list
   });
@@ -61,14 +61,14 @@ export function postCommonUserList(list: CreateUser[]) {
 
 export function deleteCommonUser(id: string) {
   return request({
-    url: `/users/common/${id}`,
+    url: `/admin/users/common/${id}`,
     method: 'DELETE'
   });
 }
 
 export function deleteAdminUser(id: string) {
   return request({
-    url: `/users/admin/${id}`,
+    url: `/admin/users/admin/${id}`,
     method: 'DELETE'
   });
 }

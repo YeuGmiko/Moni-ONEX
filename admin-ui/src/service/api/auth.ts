@@ -11,6 +11,9 @@ export function fetchLogin(userName: string, password: string, rememberMe: boole
   return request<Api.Auth.LoginToken>({
     url: '/auth/login',
     method: 'post',
+    params: {
+      admin: true
+    },
     data: {
       userName,
       password,

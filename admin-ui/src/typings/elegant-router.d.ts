@@ -91,7 +91,6 @@ declare module "@elegant-router/types" {
     | "questions"
     | "user-manager_admin-user"
     | "user-manager_common-user"
-    | "user-manager_common-user"
   >;
 
   /**

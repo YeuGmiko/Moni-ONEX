@@ -7,11 +7,11 @@ import uno.moni.onex.core.base.BaseService
 import uno.moni.onex.open.vo.ModuleOpenVo
 
 interface ModuleService: BaseService<ModuleDomain> {
+    /* admin */
     fun toVo(domain: ModuleDomain): ModuleVo
     fun toVoList(domains: List<ModuleDomain>): List<ModuleVo>
     fun getVoList(): List<ModuleVo>
     fun load(id: String): ModuleDomain?
-    fun build(build: BuildModule): ModuleDomain
     fun create(build: BuildModule)
     fun update(build: BuildModule, id: String)
     fun delete(id: String)

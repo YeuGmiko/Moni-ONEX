@@ -9,8 +9,9 @@ import uno.moni.onex.core.base.BaseService
 interface QuestionOptionService: BaseService<QuestionOption> {
     fun loadByQuestionId(questionId: String): List<QuestionOptionVo>
     fun load(id: String): QuestionOption?
-    fun build(create: CreateQuestionOption): QuestionOption
+    /* 创建题目选项 */
     fun create(build: BuildQuestionOption, questionId: String)
+    /* 批量创建题目选项 */
     fun createList(builds: List<BuildQuestionOption>, questionId: String)
     fun toVo(domain: QuestionOption): QuestionOptionVo
     fun toVos(domains: List<QuestionOption>): List<QuestionOptionVo>

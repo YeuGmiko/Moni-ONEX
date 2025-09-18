@@ -17,7 +17,6 @@ import uno.moni.onex.business.question.pojo.dto.UpdateQuestion
 import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionSubmitOptionVo
 import uno.moni.onex.business.question.pojo.vo.QuestionVo
-import uno.moni.onex.business.question.service.ModuleService
 import uno.moni.onex.business.question.service.QuestionOptionService
 import uno.moni.onex.business.question.service.QuestionOrderService
 import uno.moni.onex.business.question.service.QuestionService
@@ -55,7 +54,7 @@ class QuestionServiceImpl(
         }
     }
 
-    override fun build(create: CreateQuestion): Question {
+    private fun build(create: CreateQuestion): Question {
         val domain = Question()
         domain.id = SecureUtils.generateId();
         domain.title = create.title
@@ -146,7 +145,7 @@ class QuestionServiceImpl(
             vo.optionId = domain.optionId
             vo.questionId = domain.questionId
             vo.userId = domain.userId
-            vo
+            return@map vo
         }
         return vo
     }
@@ -154,7 +153,7 @@ class QuestionServiceImpl(
     override fun toVos(domains: Collection<Question>): List<QuestionVo> {
         val moduleIds = domains.map{ it.moduleId }.toHashSet()
         /* 慎防SQL IN查询列表为空！！！*/
-        if (moduleIds.isEmpty()) return listOf()
+        if (moduleIds.isEmpty()) return emptyList()
         val modules = moduleMapper.selectList(KtQueryWrapper(ModuleDomain::class.java).`in`(ModuleDomain::id, moduleIds))
         val map = mutableMapOf<String, ModuleDomain>()
         modules.forEach { module ->
@@ -178,14 +177,13 @@ class QuestionServiceImpl(
         return vos
     }
 
-    override fun toSubmitOptionVos(domains: Collection<QuestionOption>): List<QuestionOptionVo> {
+    override fun toQuestionOptionVos(domains: List<QuestionOption>): List<QuestionOptionVo> {
         return domains.map { domain ->
             val vo = QuestionOptionVo()
             vo.id = domain.id
             vo.orderNo = domain.orderNo
             vo.answer = domain.answer
-            /* return */
-            vo
+            return@map vo
         }
     }
 
@@ -228,7 +226,7 @@ class QuestionServiceImpl(
             return@map domain
         }
         questionSubmitOptionMapper.insert(submits)
-        return toSubmitOptionVos(options)
+        return toQuestionOptionVos(options)
     }
 
     override fun loadQuestionSubmits(

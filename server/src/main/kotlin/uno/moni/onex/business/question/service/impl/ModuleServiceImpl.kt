@@ -20,7 +20,7 @@ class ModuleServiceImpl(
     private val moduleMapper: ModuleMapper,
     private val questionOrderService: QuestionOrderService
 ) : ModuleService, BaseServiceImpl<ModuleMapper, ModuleDomain>() {
-    fun _getOpenVoList(userId: String?, baseWrapper: KtQueryWrapper<ModuleDomain>?): List<ModuleOpenVo> {
+    private fun getOpenVoList(userId: String?, baseWrapper: KtQueryWrapper<ModuleDomain>?): List<ModuleOpenVo> {
         val modules = moduleMapper.selectList(baseWrapper);
 
         return modules.map { domain ->
@@ -38,7 +38,7 @@ class ModuleServiceImpl(
             return@map vo
         }
     }
-    fun _getOpenVo(userId: String?, baseWrapper: KtQueryWrapper<ModuleDomain>?): ModuleOpenVo {
+    private fun getOpenVo(userId: String?, baseWrapper: KtQueryWrapper<ModuleDomain>?): ModuleOpenVo {
         val module = moduleMapper.selectOne(baseWrapper)
 
         val vo = ModuleOpenVo()
@@ -109,7 +109,7 @@ class ModuleServiceImpl(
         }
     }
 
-    override fun build(build: BuildModule): ModuleDomain {
+    private fun build(build: BuildModule): ModuleDomain {
         val domain = ModuleDomain()
         domain.id = SecureUtils.generateId()
         domain.label = build.label
@@ -153,11 +153,11 @@ class ModuleServiceImpl(
 
     override fun getOpenVoList(userId: String?): List<ModuleOpenVo> {
         val queryWrapper = KtQueryWrapper(ModuleDomain::class.java).eq(ModuleDomain::isOpen, true)
-        return _getOpenVoList(userId, queryWrapper)
+        return getOpenVoList(userId, queryWrapper)
     }
     override fun getOpenVo(userId: String?, moduleId: String): ModuleOpenVo {
         val queryWrapper = KtQueryWrapper(ModuleDomain::class.java).eq(ModuleDomain::id, moduleId)
         if (!exists(queryWrapper)) throw RuntimeException("模块[id=$moduleId]不存在")
-        return _getOpenVo(userId, queryWrapper)
+        return getOpenVo(userId, queryWrapper)
     }
 }

@@ -7,5 +7,4 @@ import uno.moni.onex.business.question.pojo.domain.Question
 
 @Mapper
 interface QuestionMapper: BaseMapper<Question> {
-    fun getIdsByModuleId(@Param("moduleId")moduleId: String): List<String>
 }

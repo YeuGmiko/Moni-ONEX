@@ -29,7 +29,7 @@ class QuestionOptionServiceImpl: QuestionOptionService, BaseServiceImpl<Question
         }
     }
 
-    override fun build(create: CreateQuestionOption): QuestionOption {
+    private fun build(create: CreateQuestionOption): QuestionOption {
         val domain = QuestionOption()
         domain.id = SecureUtils.generateId();
         domain.questionId = create.questionId
@@ -74,8 +74,7 @@ class QuestionOptionServiceImpl: QuestionOptionService, BaseServiceImpl<Question
             vo.id = domain.id
             vo.orderNo = domain.orderNo
             vo.answer = domain.answer
-            /* return */
-            vo
+            return@map vo
         }
     }
 

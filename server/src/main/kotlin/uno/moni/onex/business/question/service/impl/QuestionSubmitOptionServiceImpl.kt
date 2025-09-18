@@ -21,8 +21,8 @@ class QuestionSubmitOptionServiceImpl(private val questionOptionMapper: Question
             vo.optionId = domain.optionId
             vo.questionId = domain.questionId
             vo.userId = domain.userId
-            /* no properties: orderNo */
-            vo
+            /* no contains: orderNo, isRight */
+            return@map vo
         }
     }
 
@@ -45,7 +45,7 @@ class QuestionSubmitOptionServiceImpl(private val questionOptionMapper: Question
             vo.optionId = domain.optionId
             vo.questionId = domain.questionId
             vo.userId = domain.userId
-            vo
+            return@map vo
         }
     }
 }

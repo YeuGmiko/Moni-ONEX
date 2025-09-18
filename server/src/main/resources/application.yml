@@ -1,0 +1,34 @@
+server:
+  port: 4000
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: OneXPractice
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/moni_one_x?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&connectionCollation=utf8_bin
+    username: root
+    password: PASSWORD
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss # 时间格式
+    time-zone: GMT+8                 # 时区
+
+springdoc:
+  api-docs:
+    enabled: true # 是否开启接口文档
+  swagger-ui:
+    path: /swagger-ui # http://localhost:4000/api/swagger-ui/index.html
+
+# MyBatisPlus配置
+mybatis-plus:
+  # 对应的 XML 文件位置
+  mapper-locations: classpath*:/mapper/**/*.xml
+  # 实体扫描，多个package用逗号或者分号分隔
+  typeAliasesPackage: uno.moni.onex.**.domain
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    jdbc-type-for-null: null

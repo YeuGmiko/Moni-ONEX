@@ -32,7 +32,7 @@ class UserController(
     @PostMapping("/common/upload")
     fun createUsers(@RequestBody users: MutableList<CreateUser>): Response<Unit> {
         users.forEach { user ->
-            userService.create(user, UserTypeEnums.COMMON_USER.type)
+            userService.create(user, UserTypeEnums.COMMON_USER)
         }
         return Response.success()
     }
@@ -41,15 +41,16 @@ class UserController(
     @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PostMapping("/common")
     fun createUser(@RequestBody body: CreateUser): Response<Unit> {
-        userService.create(body, UserTypeEnums.COMMON_USER.type)
+        userService.create(body, UserTypeEnums.COMMON_USER)
         return Response.success()
     }
-    @Operation(summary = "创建普通用户")
+
+    @Operation(summary = "批量创建普通用户")
     @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PostMapping("/common/batch")
     fun createUserBatch(@RequestBody body: List<CreateUser>): Response<Unit> {
         body.forEach { create ->
-            userService.create(create, UserTypeEnums.COMMON_USER.type)
+            userService.create(create, UserTypeEnums.COMMON_USER)
         }
         return Response.success()
     }
@@ -58,7 +59,7 @@ class UserController(
     @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @DeleteMapping("/common/{id}")
     fun deleteUser(@PathVariable("id") id: Long): Response<Unit> {
-        userService.deleteByRole(id, UserTypeEnums.COMMON_USER.type)
+        userService.deleteByRole(id, UserTypeEnums.COMMON_USER)
         return Response.success()
     }
 
@@ -66,7 +67,7 @@ class UserController(
     @SaCheckRole("SUPER_ADMIN")
     @PostMapping("/admin")
     fun createAdmin(@RequestBody body: CreateUser): Response<Unit> {
-        userService.create(body, UserTypeEnums.ADMIN_USER.type)
+        userService.create(body, UserTypeEnums.ADMIN_USER)
         return Response.success()
     }
 
@@ -74,7 +75,7 @@ class UserController(
     @SaCheckRole("SUPER_ADMIN")
     @DeleteMapping("/admin/{id}")
     fun deleteAdmin(@PathVariable("id") id: Long): Response<Unit> {
-        userService.deleteByRole(id, UserTypeEnums.ADMIN_USER.type)
+        userService.deleteByRole(id, UserTypeEnums.ADMIN_USER)
         return Response.success()
     }
 

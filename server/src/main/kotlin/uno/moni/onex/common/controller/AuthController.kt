@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
+import uno.moni.onex.admin.pojo.dto.CreateUser
 import uno.moni.onex.admin.pojo.vo.UserVo
 import uno.moni.onex.business.auth.pojo.dto.UserLoginBody
 import uno.moni.onex.business.auth.pojo.vo.LoginUser
@@ -26,13 +27,23 @@ class AuthController(
     val loginService: LoginService,
     val userService: UserService,
 ) {
+
+    @Operation(summary = "普通用户注册")
+    @PostMapping("/register")
+    fun register(
+        @RequestBody buildBody: CreateUser
+    ): Response<Unit> {
+        userService.openCreate(buildBody)
+        return Response.Companion.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "用户注册成功")
+    }
+
     @Operation(summary = "用户登录")
     @PostMapping("/login")
     fun login(
         @RequestBody loginBody: UserLoginBody,
         @RequestParam(value = "admin", required = false) admin: Boolean?,
     ): Response<LoginUser> {
-        val commonAllowRoles = listOf(UserTypeEnums.COMMON_USER.roleName)
+        val commonAllowRoles = listOf(UserTypeEnums.COMMON_USER.roleName, UserTypeEnums.ADMIN_USER.roleName, UserTypeEnums.SUPER_ADMIN.roleName)
         val adminAllowRoles = listOf(UserTypeEnums.ADMIN_USER.roleName, UserTypeEnums.SUPER_ADMIN.roleName)
         return if (admin == true) {
             Response.Companion.success().data(loginService.login(loginBody, adminAllowRoles, true))

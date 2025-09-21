@@ -6,7 +6,6 @@ data class ModuleOpenVo(
     var name: String? = null,
     var bgColor: String? = null,
     var displayOrder: Int? = null,
-    var isOpen: Boolean? = null,
     var questionCount: Int? = null,
     var remark: String? = null,
 

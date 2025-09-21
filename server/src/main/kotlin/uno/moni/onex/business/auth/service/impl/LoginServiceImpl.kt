@@ -31,8 +31,10 @@ class LoginServiceImpl(
                 /* 需要满足所有角色 */
                 if (!userRoles.containsAll(roles))  RuntimeException("该用户无权限: $roles")
             }
-            if (pass == null || hashPass == null || !userService.validatePassword(pass, hashPass)) RuntimeException("用户名或密码错误")
-            else null
+            if (pass == null || hashPass == null || !userService.validatePassword(pass, hashPass))
+                return@buildLoginUser RuntimeException("用户名或密码错误")
+            else
+                return@buildLoginUser null
         }, { loginUser ->
             /* sa login */
             StpUtil.login(loginUser.userId, loginBody.rememberMe)
@@ -42,7 +44,7 @@ class LoginServiceImpl(
             /* set session properties */
             StpUtil.getSession(true).set("rememberMe", loginBody.rememberMe)
             /* return */
-            loginUser
+            return@buildLoginUser loginUser
         })
     }
 

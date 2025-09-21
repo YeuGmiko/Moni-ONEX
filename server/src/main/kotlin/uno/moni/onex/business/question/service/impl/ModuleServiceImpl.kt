@@ -29,7 +29,6 @@ class ModuleServiceImpl(
             vo.label = domain.label
             vo.name = domain.name
             vo.bgColor = domain.bgColor
-            vo.isOpen = domain.isOpen
             vo.displayOrder = domain.displayOrder
             vo.remark = domain.remark
             val orders = questionOrderService.getVoListByModuleId(userId, domain.id as String)
@@ -46,7 +45,6 @@ class ModuleServiceImpl(
         vo.label = module.label
         vo.name = module.name
         vo.bgColor = module.bgColor
-        vo.isOpen = module.isOpen
         vo.displayOrder = module.displayOrder
         vo.remark = module.remark
         val orders = questionOrderService.getVoListByModuleId(userId, module.id as String)
@@ -104,7 +102,7 @@ class ModuleServiceImpl(
         val wrapper = KtQueryWrapper(ModuleDomain::class.java).eq(ModuleDomain::id, id)
         return try {
             getOne(wrapper)
-        } catch (e :Exception) {
+        } catch (_ :Exception) {
             null
         }
     }
@@ -156,7 +154,7 @@ class ModuleServiceImpl(
         return getOpenVoList(userId, queryWrapper)
     }
     override fun getOpenVo(userId: String?, moduleId: String): ModuleOpenVo {
-        val queryWrapper = KtQueryWrapper(ModuleDomain::class.java).eq(ModuleDomain::id, moduleId)
+        val queryWrapper = KtQueryWrapper(ModuleDomain::class.java).eq(ModuleDomain::id, moduleId).eq(ModuleDomain::isOpen, true)
         if (!exists(queryWrapper)) throw RuntimeException("模块[id=$moduleId]不存在")
         return getOpenVo(userId, queryWrapper)
     }

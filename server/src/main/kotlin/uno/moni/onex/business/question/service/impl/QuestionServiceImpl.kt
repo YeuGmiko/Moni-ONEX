@@ -40,6 +40,7 @@ class QuestionServiceImpl(
     private val questionOptionService: QuestionOptionService,
     private val questionOrderService: QuestionOrderService,
 ) : QuestionService, BaseServiceImpl<QuestionMapper, Question>() {
+
     override fun loadByModuleId(moduleId: String): List<QuestionVo> {
         val wrapper = KtQueryWrapper(Question::class.java).eq(Question::moduleId, moduleId)
         return toVos(list(wrapper))
@@ -81,7 +82,6 @@ class QuestionServiceImpl(
         return domainId
     }
 
-
     override fun update(updateBody: UpdateQuestion, id: String) {
         val wrapper = KtQueryWrapper(Question::class.java).eq(Question::id, id)
         val question = getOne(wrapper)
@@ -122,8 +122,8 @@ class QuestionServiceImpl(
 
     override fun toOpenVo(userId: String?, domain: Question): OpenQuestionVo {
         val answers = questionOptionMapper.selectList(KtQueryWrapper(QuestionOption::class.java).eq(QuestionOption::questionId, domain.id))
-        val submits = questionSubmitOptionMapper.selectList(KtQueryWrapper(QuestionSubmitOption::class.java).eq(
-            QuestionSubmitOption::questionId, domain.id).eq(QuestionSubmitOption::userId, userId))
+        val submits = questionSubmitOptionMapper.selectList(KtQueryWrapper(QuestionSubmitOption::class.java)
+            .eq(QuestionSubmitOption::questionId, domain.id).eq(QuestionSubmitOption::userId, userId))
         val vo = OpenQuestionVo()
         vo.id = domain.id
         vo.title = domain.title
@@ -164,7 +164,7 @@ class QuestionServiceImpl(
             val vo = toBaseVo(domain)
             vo.moduleName = map[domain.moduleId]?.name ?: ""
             /* no properties: optionsLen */
-            vo
+            return@map vo
         }
         val ids = domains.map { it.id }
         /* 慎防SQL IN查询列表为空！！！*/

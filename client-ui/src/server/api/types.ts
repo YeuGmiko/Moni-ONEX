@@ -1,3 +1,10 @@
+export interface Pagination<T> {
+    records: T[]
+    current: number
+    size: number
+    pages: number
+    total: number
+}
 export interface LoginUser {
     userId: string
     loginTime: string
@@ -26,7 +33,7 @@ export interface Module {
     bgColor: string
     displayOrder: string
     questionCount: number
-    questions: OrderProperties[]
+    // questions: OrderProperties[]
     remark: string
 }
 /* questions */

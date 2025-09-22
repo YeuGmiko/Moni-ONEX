@@ -1,5 +1,12 @@
 import {request} from '@/server'
-import {PostQuestionOption, Question, QuestionAnswer, QuestionOrder, SubmitQuestionOption} from '@/server/api/types'
+import {
+    Pagination,
+    PostQuestionOption,
+    Question,
+    QuestionAnswer,
+    QuestionOrder,
+    SubmitQuestionOption
+} from '@/server/api/types'
 
 export function fetchQuestions(moduleId: string) {
     return request<Question[]>({
@@ -13,10 +20,14 @@ export function fetchQuestion(id: string) {
         method: 'GET'
     })
 }
-export function fetchQuestionOrders(moduleId: string) {
-    return request<QuestionOrder[]>({
+export function fetchQuestionOrders(moduleId: string, current: number, size: number) {
+    return request<Pagination<QuestionOrder>>({
         url: `/modules/${moduleId}/questions/orders`,
-        method: 'GET'
+        method: 'GET',
+        params: {
+            current,
+            size,
+        }
     })
 }
 export function postQuestionSubmits(questionId: string, options: PostQuestionOption[]) {

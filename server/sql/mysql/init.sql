@@ -2,6 +2,7 @@ DROP DATABASE IF EXISTS `moni_one_x`;
 CREATE DATABASE `moni_one_x`;
 USE `moni_one_x`;
 
+DROP TABLE IF EXISTS `user`;
 CREATE TABLE user (
                       id bigint UNSIGNED COMMENT '用户ID',
                       user_name varchar(64) NOT NULL COMMENT '用户身份标识：学号、用户名等',
@@ -17,6 +18,7 @@ VALUES
     (7331143291401928704, 'SUPER_ADMIN', 'fb10f0238035c2b31076223dc45beea0', '超级管理员', 1, 0),
     (7331143520448675840, 'ADMIN', '73acd9a5972130b75066c82595a1fae3', '管理员', 1, 1);
 
+DROP TABLE IF EXISTS `module`;
 CREATE TABLE module (
                         id bigint UNSIGNED COMMENT '题目模块ID',
                         display_order int UNSIGNED COMMENT '顺序',
@@ -35,6 +37,7 @@ VALUES
     (1926273266499067904, 0, 'Hololive', '虚拟主播', '#9b7ec8', true, true, '');
 
 
+DROP TABLE IF EXISTS `question`;
 CREATE TABLE question (
                           id bigint UNSIGNED COMMENT '题目ID',
                           display_order int UNSIGNED COMMENT '顺序',
@@ -50,6 +53,7 @@ VALUES
     (1926258647453917184, 1, 'MYSQL初始默认值', 'MYSQL安装时，默认的启动端口号为<span class="option-order" data-order="1">1</span>，默认管理员用户名为<span class="option-order" data-order="2">2</span>。', '2025-05-24 20:47:04', 1926254740090523648),
     (1926284660514738176, 1, '病娇的MYSQL', '在开发后端服务时，使用URL连接Mysql数据库， 通常需要添加参数<span class="option-order" data-order="1">1</span>=true，使得后端在长时间运行时，不会因不活跃导致终止连接。', '2025-05-24 22:30:26', 1926254740090523648);
 
+DROP TABLE IF EXISTS `question_option`;
 CREATE TABLE question_option (
                                  id bigint UNSIGNED COMMENT '题目选项ID',
                                  order_no int3 UNSIGNED NOT NULL COMMENT '选项顺序',
@@ -76,6 +80,7 @@ VALUES
     (1926258647525220352, 2, 'root', 1926258647453917184),
     (1926284660556681216, 1, 'autoReconnect', 1926284660514738176);
 
+DROP TABLE IF EXISTS `map_schema`;
 CREATE TABLE map_schema(
                            id bigint UNSIGNED COMMENT 'ID',
                            map_key varchar(255) NOT NULL COMMENT 'map key',
@@ -84,3 +89,12 @@ CREATE TABLE map_schema(
                            PRIMARY KEY (id),
                            UNIQUE (map_key)
 ) ENGINE=innodb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '键值对map表';
+
+DROP TABLE IF EXISTS `daily_submit`;
+CREATE TABLE daily_submit(
+                             id bigint UNSIGNED COMMENT 'ID',
+                             user_id bigint UNSIGNED COMMENT '用户ID',
+                             question_id bigint UNSIGNED COMMENT '题目ID',
+                             result int UNSIGNED COMMENT '是否正确, 0错误，1正确  ',
+                             submit_time datetime COMMENT '提交日期'
+) ENGINE=innodb CHARACTER SET utf8mb4 COLLATE utf8mb4_bin COMMENT '每日用户提交记录';

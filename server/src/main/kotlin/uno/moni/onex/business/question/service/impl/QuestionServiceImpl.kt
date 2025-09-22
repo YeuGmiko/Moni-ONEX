@@ -22,6 +22,8 @@ import uno.moni.onex.business.question.service.QuestionOptionService
 import uno.moni.onex.business.question.service.QuestionOrderService
 import uno.moni.onex.business.question.service.QuestionService
 import uno.moni.onex.business.question.service.QuestionSubmitOptionService
+import uno.moni.onex.business.rank.mapper.DailySubmitMapper
+import uno.moni.onex.business.rank.pojo.domain.DailySubmit
 import uno.moni.onex.core.base.BaseServiceImpl
 import uno.moni.onex.core.core.util.SecureUtils
 import uno.moni.onex.open.vo.OpenQuestionVo
@@ -40,6 +42,7 @@ class QuestionServiceImpl(
     private val questionSubmitOptionService: QuestionSubmitOptionService,
     private val questionOptionService: QuestionOptionService,
     private val questionOrderService: QuestionOrderService,
+    private val dailySubmitMapper: DailySubmitMapper,
 ) : QuestionService, BaseServiceImpl<QuestionMapper, Question>() {
 
     override fun loadByModuleId(moduleId: String): List<QuestionVo> {
@@ -58,7 +61,7 @@ class QuestionServiceImpl(
 
     private fun build(create: CreateQuestion): Question {
         val domain = Question()
-        domain.id = SecureUtils.generateId();
+        domain.id = SecureUtils.generateId()
         domain.title = create.title
         domain.content = create.content
         domain.displayOrder = create.order
@@ -229,6 +232,16 @@ class QuestionServiceImpl(
             return@map domain
         }
         questionSubmitOptionMapper.insert(submits)
+        /* 原谅我真的懒得写事件了 */
+        /* event: submit question */
+        val userDailySubmit = DailySubmit()
+        userDailySubmit.id = SecureUtils.generateId()
+        userDailySubmit.userId = userId
+        userDailySubmit.questionId = questionId
+        userDailySubmit.result = if (questionOrderService.calculateAccomplishStatus(submits, options) == 2) 1 else 0
+        userDailySubmit.submitTime = LocalDateTime.now()
+        if (!dailySubmitMapper.insertOrUpdate(userDailySubmit)) throw RuntimeException("题目提交失败，服务器错误")
+
         return toQuestionOptionVos(options)
     }
 

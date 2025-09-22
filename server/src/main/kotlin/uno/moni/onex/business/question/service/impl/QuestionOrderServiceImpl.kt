@@ -49,12 +49,14 @@ class QuestionOrderServiceImpl(
         val questionIds = questionPage.records.map { it.id }
         /* voPage */
         val voPage: IPage<QuestionOrderOpenVo> = Page()
+        var currentOrderNum = (page - 1) * size + 1
         BeanUtils.copyProperties(questionPage, voPage)
         /* 用户未登录 */
         if (userId == null) {
             voPage.records = questionPage.records.map{ question ->
                 val vo = QuestionOrderOpenVo()
                 vo.id = question.id
+                vo.order = currentOrderNum++
                 vo.title = question.title
                 vo.displayOrder = question.displayOrder
                 vo.accomplishStatus = 0
@@ -93,6 +95,7 @@ class QuestionOrderServiceImpl(
         voPage.records = questionPage.records.map { domain ->
             val vo = QuestionOrderOpenVo()
             vo.id = domain.id
+            vo.order = currentOrderNum++
             vo.title = domain.title
             vo.displayOrder = domain.displayOrder
             val submits = submitsMap[domain.id] ?: emptyList()

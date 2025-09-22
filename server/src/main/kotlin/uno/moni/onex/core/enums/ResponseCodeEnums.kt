@@ -10,5 +10,6 @@ enum class ResponseCodeEnums(
     ACCOUNT_FORBID(4600, "该账户当前不可用"),
     /* REQUEST */
     SUCCESS_NO_CONTENT(2000, "请求成功"),
-    SUCCESS(2200, "请求成功")
+    SUCCESS(2200, "请求成功"),
+    FAILED(4000, "请求失败")
 }

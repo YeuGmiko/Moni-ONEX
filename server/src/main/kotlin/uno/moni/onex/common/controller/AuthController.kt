@@ -1,5 +1,6 @@
 package uno.moni.onex.common.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
@@ -52,6 +53,7 @@ class AuthController(
         }
     }
 
+    @SaCheckDisable
     @SaCheckLogin
     @Operation(summary = "退出登录状态")
     @GetMapping("/logout")
@@ -60,11 +62,12 @@ class AuthController(
         return Response.Companion.success(ResponseCodeEnums.USER_LOGOUT.code, ResponseCodeEnums.USER_LOGOUT.msg)
     }
 
+    @SaCheckDisable
+    @SaCheckLogin
     @Operation(summary = "获取当前登录用户信息")
     @GetMapping("/info")
-    @SaCheckLogin
     fun getCurrentInfo(): Response<UserVo> {
-        val userId = StpUtil.getLoginId().toString().toLong()
+        val userId = StpUtil.getLoginId().toString()
         val user = userService.load(userId)
         if (user == null) {
             throw RuntimeException("该用户[${userId}]不存在")

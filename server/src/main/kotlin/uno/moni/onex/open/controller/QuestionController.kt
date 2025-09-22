@@ -1,5 +1,6 @@
 package uno.moni.onex.open.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
@@ -43,6 +44,7 @@ class QuestionController(
         return Response.success().data(questionService.loadOpenById(questionId, userId))
     }
 
+    @SaCheckDisable
     @SaCheckLogin
     @Operation(summary = "获取题目答案")
     @GetMapping("/questions/{questionId}/answers")
@@ -51,6 +53,7 @@ class QuestionController(
         return Response.success().data(questionService.loadQuestionAnswers(questionId, userId))
     }
 
+    @SaCheckDisable
     @SaCheckLogin
     @Operation(summary = "获取题目的提交内容")
     @GetMapping("/questions/{questionId}/submits")
@@ -59,6 +62,7 @@ class QuestionController(
         return Response.success().data(questionService.loadQuestionSubmits(questionId, userId))
     }
 
+    @SaCheckDisable
     @SaCheckLogin
     @Operation(summary = "提交题目答案")
     @PostMapping("/questions/{questionId}/submits")

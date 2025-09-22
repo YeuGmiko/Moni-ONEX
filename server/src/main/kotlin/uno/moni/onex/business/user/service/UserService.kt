@@ -11,8 +11,8 @@ import uno.moni.onex.business.user.pojo.dto.UpdateUserAuthPassword
 import uno.moni.onex.common.pojo.vo.UserCommonVo
 
 interface UserService: BaseService<User> {
-    fun load(username: String): User?
-    fun load(userId: Long): User?
+    fun loadByUserName(username: String): User?
+    fun load(userId: String): User?
     fun build(build: BuildUser): User
     fun create(build: CreateUser, userType: UserTypeEnums)
     fun toVo(user: User): UserVo

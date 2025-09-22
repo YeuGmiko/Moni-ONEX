@@ -14,7 +14,7 @@ class Response<T> (
         private const val SUCCESS_CODE: Int = 2000
         private const val SUCCESS_MESSAGE = "success"
 
-        private const val FAIL_CODE: Int = 4500
+        private const val FAIL_CODE: Int = 4000
         private const val FAIL_MESSAGE = "failed"
 
         fun success(): Response<Unit> {

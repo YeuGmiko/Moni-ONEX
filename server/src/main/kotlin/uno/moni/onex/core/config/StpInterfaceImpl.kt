@@ -21,7 +21,7 @@ class StpInterfaceImpl(
         loginId: Any?,
         loginType: String?
     ): List<String?>? {
-        val userId = loginId?.toString()?.toLong() ?: return null
+        val userId = loginId?.toString() ?: return null
         val roles = mutableListOf<String>()
         val user = userId.let { userService.load(it) } ?: return emptyList()
         user.userType?.let { roles.add(UserTypeEnums.getRoleName(it)) }
@@ -29,14 +29,16 @@ class StpInterfaceImpl(
     }
 
     override fun isDisabled(loginId: Any?, service: String?): SaDisableWrapperInfo? {
-        val userId = loginId?.toString()?.toLong() ?: return null
-        val user = userId.let { userService.load(it) } ?: return null
+        val userId = loginId?.toString() ?: return SaDisableWrapperInfo.createNotDisabled()
+        val user = userId.let { userService.load(it) } ?: return SaDisableWrapperInfo(true, -1, 1)
+        /* super admin forever isn't forbid */
+        if (user.userType == 0) return SaDisableWrapperInfo.createNotDisabled()
         return when(user.status) {
             /* 用户不可用 */
             0 -> SaDisableWrapperInfo(true, -1, 1)
             /* 用户被封禁 */
-            2 -> SaDisableWrapperInfo(true, -1, 1)
-            else -> null
+            2 -> SaDisableWrapperInfo(true, -1, 2)
+            else -> return SaDisableWrapperInfo.createNotDisabled()
         }
     }
 }

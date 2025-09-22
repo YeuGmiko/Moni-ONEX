@@ -3,6 +3,7 @@ package uno.moni.onex.core.handler
 import cn.dev33.satoken.exception.*
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
+import uno.moni.onex.core.enums.ResponseCodeEnums
 import uno.moni.onex.core.pojo.vo.Response
 
 
@@ -44,7 +45,10 @@ class GlobalExceptionHandler {
     @ExceptionHandler(DisableServiceException::class)
     fun handlerException(e: DisableServiceException): Response<Unit> {
         e.printStackTrace()
-        return Response.fail("当前账号 ${e.service} 服务已被封禁 (level=${e.level})：${e.disableTime}秒后解封")
+        val disableTimeStr = if (e.disableTime == -1L) "永久" else "${e.disableTime}秒"
+        if (e.level == 2) return Response.fail(ResponseCodeEnums.ACCOUNT_FORBID.code, "当前账号服务已被封禁，封禁剩余时间：$disableTimeStr")
+        else if (e.level == 1) return Response.fail(ResponseCodeEnums.ACCOUNT_FORBID.code,"当前账号服务不可用")
+        return Response.fail(ResponseCodeEnums.ACCOUNT_FORBID.code,"身份校验失败，本次服务不可用")
     }
 
     // 拦截：Http Basic 校验失败异常

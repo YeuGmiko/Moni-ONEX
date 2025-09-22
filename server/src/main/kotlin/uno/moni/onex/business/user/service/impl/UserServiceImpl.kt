@@ -1,5 +1,6 @@
 package uno.moni.onex.business.user.service.impl
 
+import cn.dev33.satoken.stp.StpUtil
 import cn.hutool.crypto.SecureUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import org.springframework.stereotype.Service
@@ -18,7 +19,7 @@ import uno.moni.onex.common.pojo.vo.UserCommonVo
 
 @Service
 class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
-    override fun load(username: String): User? {
+    override fun loadByUserName(username: String): User? {
         val wrapper = KtQueryWrapper(User::class.java).eq(User::userName, username)
         return try {
             getOne(wrapper)
@@ -27,7 +28,7 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         }
     }
 
-    override fun load(userId: Long): User? {
+    override fun load(userId: String): User? {
         val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
         return try {
             getOne(wrapper)
@@ -97,6 +98,10 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         if (!updateById(user)) {
             throw RuntimeException("用户状态更改失败，服务器错误")
         }
+        if (banned) {
+            StpUtil.kickout(userId)
+            StpUtil.logout(userId)
+        } else StpUtil.untieDisable(userId)
     }
 
     override fun updateUser(userId: String, update: uno.moni.onex.admin.pojo.dto.UpdateUser) {

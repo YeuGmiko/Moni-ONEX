@@ -1,5 +1,6 @@
 package uno.moni.onex.admin.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckRole
 import cn.dev33.satoken.annotation.SaMode
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
@@ -25,6 +26,8 @@ import uno.moni.onex.business.user.pojo.domain.User
 import uno.moni.onex.core.enums.ResponseCodeEnums
 import uno.moni.onex.core.pojo.vo.Response
 
+@SaCheckDisable
+@SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
 @RestController("AdminUserController")
 @RequestMapping("/admin/users")
 @Tag(name = "用户管理")
@@ -33,7 +36,6 @@ class UserController(
 ) {
     @Transactional
     @Operation(summary = "批量导入普通用户")
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PostMapping("/common/upload")
     fun createUsers(@RequestBody users: MutableList<CreateUser>): Response<Unit> {
         users.forEach { user ->
@@ -43,7 +45,6 @@ class UserController(
     }
 
     @Operation(summary = "创建普通用户")
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PostMapping("/common")
     fun createUser(@RequestBody body: CreateUser): Response<Unit> {
         userService.create(body, UserTypeEnums.COMMON_USER)
@@ -51,7 +52,6 @@ class UserController(
     }
 
     @Operation(summary = "批量创建普通用户")
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PostMapping("/common/batch")
     fun createUserBatch(@RequestBody body: List<CreateUser>): Response<Unit> {
         body.forEach { create ->
@@ -61,7 +61,6 @@ class UserController(
     }
 
     @Operation(summary = "删除普通用户")
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @DeleteMapping("/common/{id}")
     fun deleteUser(@PathVariable("id") id: String): Response<Unit> {
         userService.deleteByRole(id, UserTypeEnums.COMMON_USER)
@@ -85,7 +84,6 @@ class UserController(
     }
 
     @Operation(summary = "获取所有普通用户")
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @GetMapping("/common")
     fun fetchCommonUsers(): Response<List<UserVo>> {
         val wrapper = KtQueryWrapper(User::class.java).eq(User::userType, UserTypeEnums.COMMON_USER.type)
@@ -112,7 +110,6 @@ class UserController(
             Parameter(name = "type", description = "1为封禁，0为解禁", required = false)
         ]
     )
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @GetMapping("/ban/{id}")
     fun changeUserBan(
         @PathVariable("id") userId: String,
@@ -125,7 +122,6 @@ class UserController(
     @Operation(
         summary = "强制更改用户信息"
     )
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @PutMapping("/{id}")
     fun updateUserForce(
         @PathVariable("id") userId: String,

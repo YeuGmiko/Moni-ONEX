@@ -1,5 +1,6 @@
 package uno.moni.onex.admin.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckRole
 import cn.dev33.satoken.annotation.SaMode
 import io.swagger.v3.oas.annotations.Operation
@@ -21,6 +22,8 @@ import uno.moni.onex.business.question.service.QuestionOptionService
 import uno.moni.onex.business.question.service.QuestionService
 import uno.moni.onex.core.pojo.vo.Response
 
+@SaCheckDisable
+@SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
 @RestController("AdminQuestionController")
 @RequestMapping("/admin/modules")
 @Tag(name = "题库管理")
@@ -28,14 +31,12 @@ class QuestionController(
     val questionService: QuestionService,
     val questionOptionService: QuestionOptionService
 ) {
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "获取模块下所有题目")
     @GetMapping("/{id}/questions")
     fun getQuestions(@PathVariable id: String): Response<List<QuestionVo>> {
         return Response.Companion.success().data(questionService.loadByModuleId(id))
     }
 
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "获取题目信息")
     @GetMapping("/questions/{id}")
     fun getQuestion(@PathVariable id: String): Response<QuestionVo> {
@@ -45,7 +46,6 @@ class QuestionController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "添加题目至指定模块")
     @PostMapping("/{id}/questions")
     fun createQuestion(@PathVariable id: String, @RequestBody body: BuildQuestion): Response<Unit> {
@@ -55,7 +55,6 @@ class QuestionController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "批量添加题目至指定模块")
     @PostMapping("/{id}/questions/batch")
     fun createQuestionBatch(@PathVariable id: String, @RequestBody body: List<BuildQuestion>): Response<Unit> {
@@ -68,7 +67,6 @@ class QuestionController(
 
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "更改题目信息")
     @PutMapping("/questions/{id}")
     fun updateQuestion(@PathVariable id: String, @RequestBody body: UpdateQuestion): Response<Unit> {
@@ -77,7 +75,6 @@ class QuestionController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "删除题目")
     @DeleteMapping("/questions/{id}")
     fun deleteQuestion(@PathVariable id: String): Response<Unit> {
@@ -85,7 +82,6 @@ class QuestionController(
         return Response.Companion.success()
     }
 
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "查询题目中所有填空项")
     @GetMapping("/questions/{id}/options")
     fun getQuestionOptions(@PathVariable id: String): Response<List<QuestionOptionVo>> {

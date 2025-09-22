@@ -1,5 +1,6 @@
 package uno.moni.onex.admin.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckRole
 import cn.dev33.satoken.annotation.SaMode
 import io.swagger.v3.oas.annotations.Operation
@@ -18,20 +19,20 @@ import uno.moni.onex.business.question.pojo.vo.ModuleVo
 import uno.moni.onex.business.question.service.ModuleService
 import uno.moni.onex.core.pojo.vo.Response
 
+@SaCheckDisable
+@SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
 @RestController("AdminModuleController")
 @RequestMapping("/admin/modules")
 @Tag(name = "题库模块管理")
 class ModuleController(
     val moduleService: ModuleService
 ) {
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "获取模块列表")
     @GetMapping
     fun getModules(): Response<List<ModuleVo>> {
         return Response.Companion.success().data(moduleService.getVoList())
     }
 
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "获取模块信息")
     @GetMapping("/{id}")
     fun getModule(@PathVariable id: String): Response<ModuleVo> {
@@ -41,7 +42,6 @@ class ModuleController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "添加模块")
     @PostMapping
     fun createModule(@RequestBody body: BuildModule): Response<Unit> {
@@ -49,7 +49,6 @@ class ModuleController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "更新模块信息")
     @PutMapping("/{id}")
     fun updateModule(@RequestBody body: BuildModule, @PathVariable id: String): Response<Unit> {
@@ -58,7 +57,6 @@ class ModuleController(
     }
 
     @Transactional
-    @SaCheckRole(value = ["SUPER_ADMIN", "ADMIN_USER"], mode = SaMode.OR)
     @Operation(summary = "删除模块")
     @DeleteMapping("/{id}")
     fun deleteModule(@PathVariable id: String): Response<Unit> {

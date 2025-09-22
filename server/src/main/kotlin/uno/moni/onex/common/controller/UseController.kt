@@ -1,5 +1,6 @@
 package uno.moni.onex.common.controller
 
+import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.stp.StpUtil
 import cn.dev33.satoken.annotation.SaCheckLogin
 import io.swagger.v3.oas.annotations.Operation
@@ -16,6 +17,7 @@ import uno.moni.onex.common.pojo.vo.UserCommonVo
 import uno.moni.onex.core.enums.ResponseCodeEnums
 import uno.moni.onex.core.pojo.vo.Response
 
+@SaCheckDisable
 @RestController("CommonUserController")
 @RequestMapping("/users")
 @Tag(name = "用户公共模块")

@@ -15,7 +15,7 @@ class LoginServiceImpl(
     var userService: UserService,
 ): LoginService {
     override fun login(loginBody: UserLoginBody, roles: List<String>, or: Boolean): LoginUser {
-        val user = loginBody.userName?.let { userService.load(it) } ?: throw RuntimeException("用户名或密码错误")
+        val user = loginBody.userName?.let { userService.loadByUserName(it) } ?: throw RuntimeException("用户名或密码错误")
 
         return buildLoginUser(user, {
             val pass = loginBody.password

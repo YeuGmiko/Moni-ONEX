@@ -4,8 +4,10 @@ import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -72,5 +74,20 @@ class AuthController(
         if (user == null) {
             throw RuntimeException("该用户[${userId}]不存在")
         } else return Response.Companion.success().data(userService.toVo(user))
+    }
+
+    @Operation(
+        summary = "更改用户封禁",
+        parameters = [
+            Parameter(name = "type", description = "1为封禁，0为解禁", required = false)
+        ]
+    )
+    @GetMapping("/ban/{id}")
+    fun changeUserBan(
+        @PathVariable("id") userId: String,
+        @RequestParam("type", defaultValue = "1") type: Int
+    ): Response<Unit> {
+        userService.changeBanned(userId, type == 1)
+        return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "操作成功")
     }
 }

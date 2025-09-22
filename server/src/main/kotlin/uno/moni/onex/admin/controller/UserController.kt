@@ -105,21 +105,6 @@ class UserController(
     }
 
     @Operation(
-        summary = "更改用户封禁",
-        parameters = [
-            Parameter(name = "type", description = "1为封禁，0为解禁", required = false)
-        ]
-    )
-    @GetMapping("/ban/{id}")
-    fun changeUserBan(
-        @PathVariable("id") userId: String,
-        @RequestParam("type", defaultValue = "1") type: Int
-    ): Response<Unit> {
-        userService.changeBanned(userId, type == 1)
-        return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "操作成功")
-    }
-
-    @Operation(
         summary = "强制更改用户信息"
     )
     @PutMapping("/{id}")

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="uno.moni.onex.business.rank.mapper.DailySubmitMapper">
+    <select id="getDailyRank" resultType="uno.moni.onex.open.vo.RankRowVo">
+        WITH
+            user_record AS (
+                SELECT id, name FROM user
+            ),
+            user_daily_submit AS (
+                SELECT user_id, COUNT(id) AS `submits` FROM daily_submit
+                WHERE DATE(submit_time) = #{date}
+                GROUP BY user_id
+            ),
+            user_daily_ac_submit AS (
+                SELECT user_id, COUNT(id) AS `ac_count`, result FROM daily_submit
+                WHERE result = 1 AND DATE(submit_time) = #{date}
+                GROUP BY user_id
+            )
+        SELECT
+            A.name AS `nickname`,
+            IFNULL(B.submits, 0) AS `submits`,
+            IFNULL(C.ac_count, 0) AS `ac_count`,
+            ROW_NUMBER() OVER (ORDER BY C.ac_count DESC) AS `order`
+        FROM user_record AS A
+        LEFT JOIN user_daily_submit AS B ON A.id = B.user_id
+        LEFT JOIN user_daily_ac_submit AS C ON A.id = C.user_id
+        ORDER BY C.ac_count DESC
+    </select>
+    <select id="getTotalRank" resultType="uno.moni.onex.open.vo.RankRowVo">
+        WITH
+            user_record AS (
+                SELECT id, name FROM user
+            ),
+            user_daily_submit AS (
+                SELECT user_id, COUNT(id) AS `submits` FROM daily_submit
+                GROUP BY user_id
+            ),
+            user_daily_ac_submit AS (
+                SELECT user_id, COUNT(id) AS `ac_count`, result FROM daily_submit
+                WHERE result = 1
+                GROUP BY user_id
+            )
+        SELECT
+            A.name AS `nickname`,
+            IFNULL(B.submits, 0) AS `submits`,
+            IFNULL(C.ac_count, 0) AS `ac_count`,
+            ROW_NUMBER() OVER (ORDER BY C.ac_count DESC) AS `order`
+        FROM user_record AS A
+                 LEFT JOIN user_daily_submit AS B ON A.id = B.user_id
+                 LEFT JOIN user_daily_ac_submit AS C ON A.id = C.user_id
+        ORDER BY C.ac_count DESC
+    </select>
+</mapper>

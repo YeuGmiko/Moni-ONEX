@@ -33,6 +33,10 @@ class LoginServiceImpl(
             }
             if (pass == null || hashPass == null || !userService.validatePassword(pass, hashPass))
                 return@buildLoginUser RuntimeException("用户名或密码错误")
+            else if (user.status == 0)
+                return@buildLoginUser RuntimeException("该用户不可用")
+            else if (user.status == 2)
+                return@buildLoginUser RuntimeException("该用户已被禁用")
             else
                 return@buildLoginUser null
         }, { loginUser ->

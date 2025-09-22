@@ -73,7 +73,8 @@ function handleQuestionOrderClick(question: QuestionOrder) {
       id: currentModule.value.id
     },
     query: {
-      question: question.id
+      question: question.id,
+      order: question.order,
     }
   })
 }

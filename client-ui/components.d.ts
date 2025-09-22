@@ -13,6 +13,7 @@ declare module 'vue' {
     ModuleTag: typeof import('./src/components/common/module-tag.vue')['default']
     NButton: typeof import('naive-ui')['NButton']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
+    NConfigProvider: typeof import('naive-ui')['NConfigProvider']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NImage: typeof import('naive-ui')['NImage']

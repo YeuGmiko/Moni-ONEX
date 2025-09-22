@@ -14,26 +14,23 @@ import { ROUTE_NAME } from '@/router/routes'
 import { copyText } from '@/utils/system'
 import QuestionOrders from '@/components/common/question-orders.vue'
 
-import {fetchQuestion, postQuestionSubmits} from '@/server/api/questions'
+import {fetchQuestion, fetchQuestionAnswers, postQuestionSubmits} from '@/server/api/questions'
 import {fetchModule} from '@/server/api/modules'
 
+
+const route = useRoute()
+const router = useRouter()
 const requestError = ref<boolean>(false)
 const isModuleLoading = ref<boolean>(false)
 const isQuestionLoading = ref<boolean>(false)
 const submitFormRef = ref<FormInst>()
 const module = ref<Module | null>()
+const currentOrder = ref<number>(Number.parseInt(route.query.order as string))
 const question = ref<Question | null>()
 const isSubmit = computed<boolean>(() => {
   return Boolean(question.value && question.value?.accomplishStatus !== 0)
 })
-const currentIndex = computed<number>(() => {
-  if (!module.value || !question.value) return -1
-  return module.value.questions.findIndex(item => question.value?.id === item.id)
-})
-const hasNext = computed<boolean>(() => {
-  if (!module.value || !question.value) return false
-  return currentIndex.value !== module.value.questions.length - 1
-})
+const hasNext = computed<boolean>(() => Boolean(currentOrder.value < (module.value?.questionCount ?? 0)))
 const answers = ref<QuestionAnswer[]>([])
 
 async function initQuestion() {
@@ -56,6 +53,11 @@ async function getQuestion(id: string) {
   isQuestionLoading.value = false
   if (error || !responseData) return Promise.reject(error ?? new Error('no data'))
   question.value = responseData
+  if (isSubmit.value) {
+    const { error, data} = await fetchQuestionAnswers(question.value.id)
+    if (error || !data) return Promise.reject(error ?? new Error('no data'))
+    answers.value = data
+  }
 }
 async function submitAnswer(options: PostQuestionOption[]) {
   if (!question.value || !question.value.id) return
@@ -87,9 +89,6 @@ const wrongAnswers = computed<Record<string, string>>(() => {
   }, {})
 })
 
-const route = useRoute()
-const router = useRouter()
-
 async function init() {
   try {
     if (submitFormRef.value) submitFormRef.value.restoreValidation()
@@ -98,6 +97,7 @@ async function init() {
     if (!moduleId) return
     await getModule(moduleId)
     await getQuestionByQuery()
+    currentOrder.value = Number.parseInt(route.query.order as string)
   } catch {
     requestError.value = true
     isQuestionLoading.value = false
@@ -133,15 +133,15 @@ async function handleOrderChoose(order: OrderProperties) {
   await router.push({
     name: ROUTE_NAME.modules,
     params: { id: module.value?.id },
-    query: { question: order.id }
+    query: { question: order.id, order: order.order }
   })
 }
 
 function toNextQuestion() {
-  const next = module.value?.questions[currentIndex.value + 1]
-  if (!next) return
-  handleOrderChoose(next)
+  if (!hasNext.value) return
+  currentOrder.value++
 }
+
 async function validateForm() {
   if (!submitFormRef.value) return false
   try {
@@ -167,7 +167,12 @@ watch(question, async question => {
   }, {})
 })
 /* 页面更换 / 刷新的时候，触发题目信息获取*/
-watch(route, init)
+import { nextTick } from 'vue'
+
+watch(route, async () => {
+  await nextTick()
+  init()
+})
 /* 检测是否已经提交，若提交则重新渲染表单 */
 watch(isSubmit, isSubmit => {
   if (!isSubmit || !question.value) return
@@ -187,7 +192,7 @@ onMounted(init)
 
 <template>
   <div class="m-5 flex-grow flex gap-x-5 mx-auto max-w-[1640px] w-90%">
-    <div class="flex-grow flex flex-col">
+    <div class="flex-[5] flex flex-col">
       <span class="router-back w-[max-content]" @click="routerToHome">
         <Icon class="icon" name="ri-arrow-go-back-fill"></Icon>
         <span class="text">返回首页</span>
@@ -241,9 +246,9 @@ onMounted(init)
         <p class="mt-1 text-[18px]">题目加载中，请稍等...</p>
       </div>
     </div>
-    <div v-if="module && question">
+    <div class="flex-1" v-if="module && question">
       <ModuleTag :theme-color="module?.bgColor" :label="module?.label"></ModuleTag>
-      <QuestionOrders :module="module" :current="question?.id" @choose="handleOrderChoose"></QuestionOrders>
+      <QuestionOrders class="mt-2" :module="module" :current-order="currentOrder" @choose="handleOrderChoose"></QuestionOrders>
     </div>
   </div>
 </template>

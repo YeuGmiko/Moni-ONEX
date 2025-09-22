@@ -27,6 +27,7 @@ class ModulesController(
         }
         return Response.Companion.success().data(moduleService.getOpenVoList(userId))
     }
+
     @Operation(summary = "获取模块信息")
     @GetMapping("/{id}")
     fun getModule(@PathVariable id: String): Response<ModuleOpenVo> {

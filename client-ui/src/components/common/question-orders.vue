@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 const { module, currentOrder } = toRefs(props)
 const isLoading = ref<boolean>(false)
-const pageSize = 50
+const pageSize = 40
 
 const page = ref(Math.ceil(currentOrder.value / pageSize))
 const pages = computed(() => Math.ceil(module.value.questionCount / pageSize))
@@ -81,7 +81,7 @@ setTimeout(() => {
                 @click="handlerOrderClick(order)"
           >{{ order.order }}</span>
         </div>
-        <NPagination class="mt-1" :page="page" :pageSize="pageSize" :page-count="pages" size="small" :page-slot="4" @update:page="onPageChanged"></NPagination>
+        <NPagination class="mt-1 m-auto" :page="page" :pageSize="pageSize" :page-count="pages" size="small" :page-slot="5" @update:page="onPageChanged"></NPagination>
       </template>
     </div>
 </template>

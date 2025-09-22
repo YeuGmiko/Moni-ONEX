@@ -38,11 +38,20 @@ async function fetchOrders(p?: number) {
 function handlerOrderClick(order: OrderProperties) {
   emit('choose', order)
 }
+
 function onPageChanged(newPage: number) {
   page.value = newPage
 }
 
-watch(currentOrder, () => page.value = Math.ceil(currentOrder.value / pageSize))
+watch(currentOrder, async () => {
+  const newPage = Math.ceil(currentOrder.value / pageSize)
+  if (newPage !== page.value) {
+    await fetchOrders(newPage)
+  }
+  page.value = newPage
+  handlerOrderClick(orders.value.find(o => o.order === currentOrder.value))
+}, { immediate: true })
+
 /* 修得最无语的一次，小朋友千万不要学哦 */
 setTimeout(() => {
   fetchOrders()

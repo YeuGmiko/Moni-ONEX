@@ -37,6 +37,7 @@ dependencies {
     /* sql */
     implementation("com.mysql:mysql-connector-j:9.2.0")
     implementation("com.baomidou:mybatis-plus-spring-boot3-starter:3.5.11")
+    implementation("com.baomidou:mybatis-plus-jsqlparser:3.5.14")
     /* Api Doc */
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.6")
     implementation("io.swagger.core.v3:swagger-annotations:2.2.30")

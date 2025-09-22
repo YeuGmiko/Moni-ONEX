@@ -74,7 +74,7 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         return vo
     }
 
-    override fun deleteByRole(userId: Long, userType: UserTypeEnums) {
+    override fun deleteByRole(userId: String, userType: UserTypeEnums) {
         val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
         val user = getOne(wrapper)
         if (user == null) {
@@ -85,6 +85,34 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         if (!removeById(userId)) {
             throw RuntimeException("删除用户失败，服务器错误")
         }
+    }
+
+    override fun changeBanned(userId: String, banned: Boolean) {
+        val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
+        val user = getOne(wrapper)
+        if (user == null) {
+            throw RuntimeException("该用户[id=${userId}]不存在")
+        }
+        user.status = if (banned) 2 else 1
+        if (!updateById(user)) {
+            throw RuntimeException("用户状态更改失败，服务器错误")
+        }
+    }
+
+    override fun updateUser(userId: String, update: uno.moni.onex.admin.pojo.dto.UpdateUser) {
+        val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
+        val user = getOne(wrapper)
+        if (user == null) throw RuntimeException("该用户[id=$userId]不存在")
+        /* check userName */
+        if (update.userName != null && !update.userName.equals(user.userName)) {
+            if (exists(KtQueryWrapper(User::class.java).eq(User::userName, update.userName)))
+                throw RuntimeException("注册用户名[userName=${update.userName}]已存在")
+            user.userName = update.userName
+        }
+        /* update */
+        if (update.name != null) user.name = update.name
+        if (update.password != null) user.hashPassword = SecureUtil.md5(update.password)
+        if (!updateById(user)) throw RuntimeException("用户更新信息失败")
     }
 
     override fun openCreate(build: CreateUser) {

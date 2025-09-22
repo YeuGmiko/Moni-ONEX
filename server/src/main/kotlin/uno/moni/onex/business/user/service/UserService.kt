@@ -17,7 +17,9 @@ interface UserService: BaseService<User> {
     fun create(build: CreateUser, userType: UserTypeEnums)
     fun toVo(user: User): UserVo
     fun validatePassword(password: String, hashPassword: String): Boolean
-    fun deleteByRole(userId: Long, userType: UserTypeEnums)
+    fun deleteByRole(userId: String, userType: UserTypeEnums)
+    fun changeBanned(userId: String, banned: Boolean)
+    fun updateUser(userId: String, update: uno.moni.onex.admin.pojo.dto.UpdateUser)
     /* open */
     fun openCreate(build: CreateUser)
     /* common */

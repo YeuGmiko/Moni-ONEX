@@ -21,7 +21,7 @@ class ModuleServiceImpl(
     private val questionOrderService: QuestionOrderService
 ) : ModuleService, BaseServiceImpl<ModuleMapper, ModuleDomain>() {
     private fun getOpenVoList(userId: String?, baseWrapper: KtQueryWrapper<ModuleDomain>?): List<ModuleOpenVo> {
-        val modules = moduleMapper.selectList(baseWrapper);
+        val modules = moduleMapper.selectList(baseWrapper)
 
         return modules.map { domain ->
             val vo = ModuleOpenVo()

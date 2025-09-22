@@ -5,5 +5,4 @@ class CreateQuestion(
     var title: String? = null,
     var content: String? = null,
     var order: Int? = null,
-) {
-}
+)

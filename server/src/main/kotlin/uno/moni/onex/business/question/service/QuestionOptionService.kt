@@ -2,7 +2,6 @@ package uno.moni.onex.business.question.service
 
 import uno.moni.onex.business.question.pojo.domain.QuestionOption
 import uno.moni.onex.business.question.pojo.dto.BuildQuestionOption
-import uno.moni.onex.business.question.pojo.dto.CreateQuestionOption
 import uno.moni.onex.business.question.pojo.vo.QuestionOptionVo
 import uno.moni.onex.core.base.BaseService
 

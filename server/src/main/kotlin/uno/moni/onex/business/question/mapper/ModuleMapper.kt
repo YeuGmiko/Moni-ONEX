@@ -5,5 +5,4 @@ import org.apache.ibatis.annotations.Mapper
 import uno.moni.onex.business.question.pojo.domain.ModuleDomain
 
 @Mapper
-interface ModuleMapper: BaseMapper<ModuleDomain> {
-}
+interface ModuleMapper: BaseMapper<ModuleDomain>

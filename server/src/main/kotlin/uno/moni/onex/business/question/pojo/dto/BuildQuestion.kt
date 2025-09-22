@@ -5,5 +5,4 @@ data class BuildQuestion(
     var content: String? = null,
     var order: Int? = null,
     var options: MutableList<BuildQuestionOption> = mutableListOf(),
-) {
-}
+)

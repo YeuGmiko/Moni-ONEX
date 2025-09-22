@@ -5,5 +5,4 @@ import org.apache.ibatis.annotations.Mapper
 import uno.moni.onex.business.user.pojo.domain.User
 
 @Mapper
-interface UserMapper: BaseMapper<User> {
-}
+interface UserMapper: BaseMapper<User>

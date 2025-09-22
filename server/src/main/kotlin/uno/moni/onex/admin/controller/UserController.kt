@@ -5,7 +5,6 @@ import cn.dev33.satoken.annotation.SaCheckRole
 import cn.dev33.satoken.annotation.SaMode
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import uno.moni.onex.admin.pojo.dto.CreateUser
 import uno.moni.onex.admin.pojo.dto.UpdateUser

@@ -31,7 +31,7 @@ class QuestionOptionServiceImpl: QuestionOptionService, BaseServiceImpl<Question
 
     private fun build(create: CreateQuestionOption): QuestionOption {
         val domain = QuestionOption()
-        domain.id = SecureUtils.generateId();
+        domain.id = SecureUtils.generateId()
         domain.questionId = create.questionId
         domain.orderNo = create.orderNo
         domain.answer = create.answer

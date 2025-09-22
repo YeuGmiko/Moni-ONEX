@@ -11,5 +11,4 @@ data class QuestionOption(
     var orderNo: Int? = null,
     var answer: String? = null,
     var questionId: String? = null
-) {
-}
+)

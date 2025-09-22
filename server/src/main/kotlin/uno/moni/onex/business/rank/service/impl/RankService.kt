@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service
 import uno.moni.onex.business.rank.mapper.DailySubmitMapper
 import uno.moni.onex.business.rank.pojo.domain.DailySubmit
 import uno.moni.onex.business.rank.service.RankService
-import uno.moni.onex.business.user.mapper.UserMapper
 import uno.moni.onex.core.base.BaseServiceImpl
 import uno.moni.onex.open.vo.RankRowVo
 import java.time.LocalDate

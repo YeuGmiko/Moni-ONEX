@@ -6,5 +6,4 @@ class UpdateUser(
     var name: String?,
     var userName: String?,
     var password: String?,
-): Serializable {
-}
+): Serializable

@@ -5,5 +5,4 @@ import org.apache.ibatis.annotations.Mapper
 import uno.moni.onex.business.question.pojo.domain.QuestionOption
 
 @Mapper
-interface QuestionOptionMapper: BaseMapper<QuestionOption> {
-}
+interface QuestionOptionMapper: BaseMapper<QuestionOption>

@@ -8,5 +8,4 @@ data class ModuleOpenVo(
     var displayOrder: Int? = null,
     var questionCount: Int? = null,
     var remark: String? = null,
-) {
-}
+)

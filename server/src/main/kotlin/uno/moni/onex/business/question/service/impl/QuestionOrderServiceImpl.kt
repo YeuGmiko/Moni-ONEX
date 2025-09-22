@@ -1,6 +1,9 @@
 package uno.moni.onex.business.question.service.impl
 
+import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page
+import org.springframework.beans.BeanUtils
 import org.springframework.stereotype.Service
 import uno.moni.onex.business.question.mapper.QuestionMapper
 import uno.moni.onex.business.question.mapper.QuestionOptionMapper
@@ -40,14 +43,16 @@ class QuestionOrderServiceImpl(
         return accomplishStatus
     }
 
-    override fun getVoListByModuleId(userId: String?, moduleId: String): List<QuestionOrderOpenVo> {
+    override fun getVoPageByModuleId(page: Long, size: Long, moduleId: String, userId: String?): IPage<QuestionOrderOpenVo> {
         val questionQueryWrapper = KtQueryWrapper(Question::class.java).eq(Question::moduleId, moduleId)
-        val questions = questionMapper.selectList(questionQueryWrapper)
-        val questionIds = questions.map { it.id }
-
+        val questionPage = questionMapper.selectPage<IPage<Question>>(Page(page, size), questionQueryWrapper)
+        val questionIds = questionPage.records.map { it.id }
+        /* voPage */
+        val voPage: IPage<QuestionOrderOpenVo> = Page()
+        BeanUtils.copyProperties(questionPage, voPage)
         /* 用户未登录 */
         if (userId == null) {
-            return questions.map{ question ->
+            voPage.records = questionPage.records.map{ question ->
                 val vo = QuestionOrderOpenVo()
                 vo.id = question.id
                 vo.title = question.title
@@ -55,10 +60,11 @@ class QuestionOrderServiceImpl(
                 vo.accomplishStatus = 0
                 return@map vo
             }
+            return voPage
         }
 
         /* 慎防SQL IN查询列表为空！！！*/
-        if (questionIds.isEmpty()) return emptyList()
+        if (questionIds.isEmpty()) return Page(0, size)
         val questionOptionsQueryWrapper = KtQueryWrapper(QuestionOption::class.java).`in`(QuestionOption::questionId, questionIds)
         val questionOptions = questionOptionMapper.selectList(questionOptionsQueryWrapper)
 
@@ -84,8 +90,7 @@ class QuestionOrderServiceImpl(
             options.add(option)
             submitsMap[option.questionId as String] = options
         }
-
-        return questions.map { domain ->
+        voPage.records = questionPage.records.map { domain ->
             val vo = QuestionOrderOpenVo()
             vo.id = domain.id
             vo.title = domain.title
@@ -95,5 +100,6 @@ class QuestionOrderServiceImpl(
             vo.accomplishStatus = calculateAccomplishStatus(submits, answers)
             return@map vo
         }
+        return voPage
     }
 }

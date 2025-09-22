@@ -1,5 +1,6 @@
 package uno.moni.onex.business.question.service.impl
 
+import com.baomidou.mybatisplus.core.metadata.IPage
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import org.springframework.stereotype.Service
 import uno.moni.onex.business.question.mapper.ModuleMapper
@@ -195,10 +196,12 @@ class QuestionServiceImpl(
     }
 
     override fun loadOrdersByModuleId(
+        page: Long,
+        size: Long,
         moduleId: String,
         userId: String?
-    ): List<QuestionOrderOpenVo> {
-        return questionOrderService.getVoListByModuleId(userId, moduleId)
+    ): IPage<QuestionOrderOpenVo> {
+        return questionOrderService.getVoPageByModuleId(page, size, moduleId, userId)
     }
 
     override fun postQuestionSubmits(

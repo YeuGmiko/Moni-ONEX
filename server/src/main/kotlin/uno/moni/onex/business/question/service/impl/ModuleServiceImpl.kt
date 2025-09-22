@@ -31,9 +31,8 @@ class ModuleServiceImpl(
             vo.bgColor = domain.bgColor
             vo.displayOrder = domain.displayOrder
             vo.remark = domain.remark
-            val orders = questionOrderService.getVoListByModuleId(userId, domain.id as String)
-            vo.questions = orders
-            vo.questionCount = orders.size
+            val count = questionMapper.selectCount(KtQueryWrapper(Question::class.java).eq(Question::moduleId, domain.id))
+            vo.questionCount = count.toInt()
             return@map vo
         }
     }
@@ -47,9 +46,8 @@ class ModuleServiceImpl(
         vo.bgColor = module.bgColor
         vo.displayOrder = module.displayOrder
         vo.remark = module.remark
-        val orders = questionOrderService.getVoListByModuleId(userId, module.id as String)
-        vo.questions = orders
-        vo.questionCount = orders.size
+        val count = questionMapper.selectCount(KtQueryWrapper(Question::class.java).eq(Question::moduleId, module.id))
+        vo.questionCount = count.toInt()
 
         return vo
     }

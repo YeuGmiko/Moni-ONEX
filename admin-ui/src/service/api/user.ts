@@ -72,3 +72,18 @@ export function deleteAdminUser(id: string) {
     method: 'DELETE'
   });
 }
+export function updateUserInfo(body: { name: string }) {
+  return request({
+    url: '/users/info',
+    method: 'PUT',
+    data: body
+  });
+}
+
+export function updatePassword(body: { oldPassword: string; newPassword: string }) {
+  return request({
+    url: '/users/auth/password',
+    method: 'PUT',
+    data: body
+  });
+}

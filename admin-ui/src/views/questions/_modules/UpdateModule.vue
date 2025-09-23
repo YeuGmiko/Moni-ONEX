@@ -30,6 +30,7 @@ const model = reactive<PostModule>({
   name: '',
   bgColor: '#efefef',
   order: 0,
+  open: false,
   remark: ''
 });
 const rules: FormRules = {
@@ -110,6 +111,9 @@ watch(showModel, async newValue => {
         </NFormItem>
         <NFormItem label="顺序" path="order">
           <NInputNumber v-model:value="model.order" placeholder="请输入顺序，小数靠前" :min="0"></NInputNumber>
+        </NFormItem>
+        <NFormItem label="公开状态" path="open">
+          <NSwitch v-model:value="model.open" />
         </NFormItem>
         <NFormItem label="备注" path="remark">
           <NInput v-model:value="model.remark" type="textarea" placeholder="备注内容"></NInput>

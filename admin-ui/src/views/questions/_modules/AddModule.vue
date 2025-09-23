@@ -28,6 +28,7 @@ const model = reactive<PostModule>({
   name: '',
   bgColor: '#efefef',
   order: defaultOrder.value,
+  open: false,
   remark: ''
 });
 const rules: FormRules = {
@@ -100,6 +101,9 @@ watch(defaultOrder, newValue => (model.order = newValue));
             :default-value="defaultOrder"
             :min="0"
           ></NInputNumber>
+        </NFormItem>
+        <NFormItem label="公开状态" path="open">
+          <NSwitch v-model:value="model.open" />
         </NFormItem>
         <NFormItem label="备注" path="remark">
           <NInput v-model:value="model.remark" type="textarea" placeholder="备注内容"></NInput>

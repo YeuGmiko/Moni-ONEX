@@ -1,2 +1,2 @@
-server/src/main/resources/application.yml
-/server/.idea
+application.yml
+server/.idea/

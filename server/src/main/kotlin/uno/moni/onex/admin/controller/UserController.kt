@@ -3,8 +3,10 @@ package uno.moni.onex.admin.controller
 import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckRole
 import cn.dev33.satoken.annotation.SaMode
+import cn.dev33.satoken.stp.StpUtil
 import com.baomidou.mybatisplus.extension.kotlin.KtQueryWrapper
 import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import uno.moni.onex.admin.pojo.dto.CreateUser
 import uno.moni.onex.admin.pojo.dto.UpdateUser
@@ -110,7 +113,24 @@ class UserController(
         @PathVariable("id") userId: String,
         @RequestBody updateUser: UpdateUser,
     ): Response<Unit> {
-        userService.updateUser(userId, updateUser)
+        val operatorId = StpUtil.getLoginId().toString()
+        userService.updateUser(operatorId, userId, updateUser)
         return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "用户信息更新成功")
+    }
+
+    @Operation(
+        summary = "更改用户封禁",
+        parameters = [
+            Parameter(name = "type", description = "1为封禁，0为解禁", required = false)
+        ]
+    )
+    @GetMapping("/ban/{id}")
+    fun changeUserBan(
+        @PathVariable("id") userId: String,
+        @RequestParam("type", defaultValue = "1") type: Int
+    ): Response<Unit> {
+        val operatorId = StpUtil.getLoginId().toString()
+        userService.changeBanned(userId, type == 1)
+        return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "操作成功")
     }
 }

@@ -88,26 +88,35 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         }
     }
 
-    override fun changeBanned(userId: String, banned: Boolean) {
-        val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
-        val user = getOne(wrapper)
-        if (user == null) {
-            throw RuntimeException("该用户[id=${userId}]不存在")
-        }
+    override fun changeBanned(operatorUserId: String, sufferUserId: String, banned: Boolean) {
+        val operatorWrapper = KtQueryWrapper(User::class.java).eq(User::id, operatorUserId)
+        val sufferWrapper = KtQueryWrapper(User::class.java).eq(User::id, sufferUserId)
+        val user = getOne(sufferWrapper)
+        val operator = getOne(operatorWrapper)
+        if (operator == null) throw RuntimeException("未查询到操作者[id=$operatorUserId]信息")
+        if (user == null) throw RuntimeException("该操作对象[id=${sufferUserId}]不存在")
+        /* check permission */
+        if ((operator.userType ?: UserTypeEnums.COMMON_USER.type) >= (user.userType ?: UserTypeEnums.COMMON_USER.type)) throw RuntimeException("无操作该对象的权限")
+        /* update */
         user.status = if (banned) 2 else 1
         if (!updateById(user)) {
             throw RuntimeException("用户状态更改失败，服务器错误")
         }
         if (banned) {
-            StpUtil.kickout(userId)
-            StpUtil.logout(userId)
-        } else StpUtil.untieDisable(userId)
+            StpUtil.kickout(sufferUserId)
+            StpUtil.logout(sufferUserId)
+        } else StpUtil.untieDisable(sufferUserId)
     }
 
-    override fun updateUser(userId: String, update: uno.moni.onex.admin.pojo.dto.UpdateUser) {
-        val wrapper = KtQueryWrapper(User::class.java).eq(User::id, userId)
-        val user = getOne(wrapper)
-        if (user == null) throw RuntimeException("该用户[id=$userId]不存在")
+    override fun updateUser(operatorUserId: String, sufferUserId: String, update: uno.moni.onex.admin.pojo.dto.UpdateUser) {
+        val sufferWrapper = KtQueryWrapper(User::class.java).eq(User::id, sufferUserId)
+        val operatorWrapper = KtQueryWrapper(User::class.java).eq(User::id, operatorUserId)
+        val user = getOne(sufferWrapper)
+        val operator = getOne(operatorWrapper)
+        if (operator == null) throw RuntimeException("未查询到操作者[id=$operatorUserId]信息")
+        if (user == null) throw RuntimeException("该操作对象[id=$sufferUserId]不存在")
+        /* check permission */
+        if ((operator.userType ?: UserTypeEnums.COMMON_USER.type) >= (user.userType ?: UserTypeEnums.COMMON_USER.type)) throw RuntimeException("无操作该对象的权限")
         /* check userName */
         if (update.userName != null && !update.userName.equals(user.userName)) {
             if (exists(KtQueryWrapper(User::class.java).eq(User::userName, update.userName)))

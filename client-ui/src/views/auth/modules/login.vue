@@ -26,7 +26,6 @@ const model = reactive<Model>({
 
 const authStore = useAuthStore()
 const { login } = authStore
-const { isLogin } = storeToRefs(authStore)
 const submitLoading = ref<boolean>(false)
 const rules: FormRules = {
   userName: [{ required: true, trigger: 'blur', message: '用户名不能为空' }],
@@ -52,12 +51,11 @@ async function submit() {
     name: ROUTE_NAME.home
   })
 }
-// onBeforeMount(() => {
-//   if (!isLogin.value) return
-//   router.push({
-//     name: ROUTE_NAME.home
-//   })
-// })
+function toRegister() {
+  router.push({
+    name: ROUTE_NAME.authRegister
+  })
+}
 </script>
 
 <template>
@@ -82,7 +80,7 @@ async function submit() {
       <span>没有账号？
         <NPopover placement="bottom" trigger="click">
           <template #trigger>
-            <NButton text type="info" @click.prevent>联系管理</NButton>
+            <NButton text type="info" @click.prevent="toRegister">联系管理</NButton>
           </template>
           <template #default>
             <NImage :src="Image" :height="120" :show-toolbar="false"></NImage>

@@ -7,6 +7,12 @@ export interface LoginBody {
     rememberMe: boolean
 }
 
+export interface RegisterBody {
+    name: string
+    userName: string
+    password: string
+}
+
 export function fetchLogout() {
     return request({
         url: '/auth/logout',
@@ -18,6 +24,14 @@ export function fetchLogin(body: LoginBody) {
     return request<LoginUser>({
         method: 'POST',
         url: '/auth/login',
+        data: body
+    })
+}
+
+export function fetchRegisterUser(body: RegisterBody) {
+    return request<LoginUser>({
+        method: 'POST',
+        url: '/auth/register',
         data: body
     })
 }

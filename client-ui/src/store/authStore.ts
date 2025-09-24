@@ -42,7 +42,7 @@ export const useAuthStore = defineStore('auth', () => {
         return getLoginUser()
     }
 
-    function logout(sendRequest?: boolean) {
+    async function logout(sendRequest?: boolean) {
         if (sendRequest) fetchLogout()
         setLocalToken()
         reset()

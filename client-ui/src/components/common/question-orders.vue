@@ -35,7 +35,8 @@ async function fetchOrders(p?: number) {
   }
 }
 
-function handlerOrderClick(order: OrderProperties) {
+function handlerOrderClick(order?: OrderProperties) {
+  if (!order || currentOrder.value === order?.order) return
   emit('choose', order)
 }
 

@@ -130,7 +130,7 @@ class UserController(
         @RequestParam("type", defaultValue = "1") type: Int
     ): Response<Unit> {
         val operatorId = StpUtil.getLoginId().toString()
-        userService.changeBanned(userId, type == 1)
+        userService.changeBanned(operatorId, userId, type == 1)
         return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "操作成功")
     }
 }

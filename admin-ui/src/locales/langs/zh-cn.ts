@@ -167,9 +167,7 @@ const local: App.I18n.Schema = {
     'user-manager_common-user': '普通用户',
     'user-manager_admin-user': '管理员',
     questions: '题库管理',
-    task: '任务管理',
-    task_config: '任务配置',
-    task_rank: '排名'
+    'account-info': '账号信息'
   },
   page: {
     login: {

@@ -45,7 +45,8 @@ export const generatedRoutes: GeneratedRoute[] = [
     component: 'layout.base$view.account-info',
     meta: {
       title: 'account-info',
-      i18nKey: 'route.account-info'
+      i18nKey: 'route.account-info',
+      icon: 'tabler:user-square'
     }
   },
   {

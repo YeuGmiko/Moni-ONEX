@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import {onMounted, ref} from 'vue'
+import {computed, onMounted, ref} from 'vue'
+import { useRoute } from 'vue-router'
 import {checkImageExists} from '@/utils/system'
+import {ROUTE_NAME} from "@/router/routes";
 
 const bgImageUrl = ref<string | null>(null)
+const route = useRoute()
+
+const title = computed(() => route.name === ROUTE_NAME.authLogin ? '用户登录' : '用户注册')
 
 function getImageUrl(order: number) {
   return `/images/login-images/login-bg-order-${order}.png`
@@ -33,7 +38,7 @@ onMounted(async () => {
     <div class="login-main">
       <div class="main-container">
         <div class="flex justify-between items-center">
-          <h2 class="m0">用户登录</h2>
+          <h2 class="m0">{{ title }}</h2>
           <p class="app-name m0">1+X<span>练习平台</span></p>
         </div>
         <RouterView v-slot="{ Component }">
@@ -52,7 +57,7 @@ onMounted(async () => {
 <style scoped>
 /* RouterView Transition */
 .component-transition-enter-active, .component-transition-leave-active {
-  transition: opacity .3s ease-in-out;
+  transition: opacity .2s ease-in-out;
 }
 .component-transition-enter-from,
 .component-transition-leave-to {

@@ -80,7 +80,7 @@ function toRegister() {
       <span>没有账号？
         <NPopover placement="bottom" trigger="click">
           <template #trigger>
-            <NButton text type="info" @click.prevent="toRegister">联系管理</NButton>
+            <NButton text type="info" @click.prevent="toRegister">去注册</NButton>
           </template>
           <template #default>
             <NImage :src="Image" :height="120" :show-toolbar="false"></NImage>

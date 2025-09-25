@@ -3,7 +3,7 @@ import {useAuthStore} from '@/store/authStore'
 import { useRouter } from 'vue-router'
 import {storeToRefs} from 'pinia'
 import {ROUTE_NAME} from '@/router/routes'
-import UserOperationList from '@/components/common/UserMenuButton/user-operation-list.vue'
+import UserOperationList from '@/layout/UserMenuButton/user-operation-list.vue'
 
 const router = useRouter()
 const authStore = useAuthStore()

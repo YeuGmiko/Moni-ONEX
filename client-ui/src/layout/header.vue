@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import UserButton from '@/components/common/UserMenuButton/user-button.vue'
+import UserButton from './UserMenuButton/user-button.vue'
+import Navigator from '@/layout/Navigator/navigator.vue'
 </script>
 
 <template>
@@ -9,6 +10,7 @@ import UserButton from '@/components/common/UserMenuButton/user-button.vue'
         <Icon class="app-name__icon" name="ri-moon-clear-line" :scale="1.5"></Icon>
         <span>Moni墨莉</span>
       </div>
+      <Navigator></Navigator>
       <div class="flex gap-x-2 items-center">
         <UserButton></UserButton>
       </div>
@@ -28,6 +30,7 @@ import UserButton from '@/components/common/UserMenuButton/user-button.vue'
     justify-content: space-between;
     align-items: center;
     height: 50px;
+    gap: 20px;
 
     .app-name {
       display: flex;
@@ -36,6 +39,7 @@ import UserButton from '@/components/common/UserMenuButton/user-button.vue'
       font-family: Comic Sans MS,serif;
       font-size: 1.2rem;
       line-height: 1;
+      text-wrap: nowrap;
     }
 
   }

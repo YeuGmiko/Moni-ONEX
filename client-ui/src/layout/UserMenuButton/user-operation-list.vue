@@ -4,7 +4,6 @@ import { useAuthStore } from '@/store/authStore'
 import {ROUTE_NAME} from '@/router/routes'
 import { useMessage } from 'naive-ui'
 
-
 interface RouteProps {
   label: string
   icon: string

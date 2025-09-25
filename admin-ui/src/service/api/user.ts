@@ -6,11 +6,19 @@ export interface CreateUser {
   password: string;
 }
 
+export type UpdateUser = CreateUser;
+
 export interface UserInfo {
   userId: string;
   userName: string;
   name: string;
+  status: number;
   roles: string[];
+}
+
+export interface UpdatePassword {
+  oldPassword: string;
+  newPassword: string;
 }
 
 export function fetchCommonUserList() {
@@ -51,6 +59,14 @@ export function postAdminUser(body: CreateUser) {
   });
 }
 
+export function updateUserInfo(id: string, body: UpdateUser) {
+  return request({
+    url: `/admin/users/${id}`,
+    method: 'PUT',
+    data: body
+  });
+}
+
 export function postCommonUserList(list: CreateUser[]) {
   return request({
     url: '/admin/users/common/upload',
@@ -72,7 +88,7 @@ export function deleteAdminUser(id: string) {
     method: 'DELETE'
   });
 }
-export function updateUserInfo(body: { name: string }) {
+export function updateCurrentUserInfo(body: { name: string }) {
   return request({
     url: '/users/info',
     method: 'PUT',
@@ -80,10 +96,20 @@ export function updateUserInfo(body: { name: string }) {
   });
 }
 
-export function updatePassword(body: { oldPassword: string; newPassword: string }) {
+export function updatePassword(body: UpdatePassword) {
   return request({
     url: '/users/auth/password',
     method: 'PUT',
     data: body
+  });
+}
+
+export function bannerUser(id: string, banner: boolean) {
+  return request({
+    url: `/admin/users/ban/${id}`,
+    method: 'PUT',
+    params: {
+      type: banner ? 1 : 0
+    }
   });
 }

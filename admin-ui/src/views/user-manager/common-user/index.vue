@@ -1,18 +1,21 @@
 <script setup lang="ts">
 import { h, ref } from 'vue';
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui';
-import { NButton, NPopconfirm, useMessage } from 'naive-ui';
+import { NButton, NPopconfirm, useMessage, NSpace } from 'naive-ui';
 import { useTable } from '@/hooks/common/table';
 import type { UserInfo } from '@/service/api/user';
 import { deleteCommonUser, fetchCommonUserList } from '@/service/api/user';
 import UploadCommonUser from '@/views/user-manager/common-user/_modules/UploadCommonUser.vue';
 import Search from './_modules/search.vue';
 import Add from './_modules/add.vue';
+import Edit from './_modules/editor.vue';
 
 const message = useMessage();
 const checkedKeys = ref<DataTableRowKey[]>([]);
 const showUpload = ref<boolean>(false);
 const showAdd = ref<boolean>(false);
+const showEdit = ref<boolean>(false);
+const currentUser = ref<UserInfo>({ userId: '', userName: '', name: '', roles: [], status: 0 });
 
 const useTableColumns: DataTableColumns<UserInfo> = [
   {
@@ -38,30 +41,43 @@ const useTableColumns: DataTableColumns<UserInfo> = [
     title: '操作',
     width: 100,
     render(row: UserInfo) {
-      return h(
-        NPopconfirm,
-        {
-          onPositiveClick: async () => {
-            const { error } = await deleteCommonUser(row.userId);
-            if (error) return;
-            message.success('删除成功');
-            await refresh();
+      return h(NSpace, {}, [
+        h(
+          NButton,
+          {
+            type: 'info',
+            text: true,
+            onClick: () => {
+              openEdit(row);
+            }
+          },
+          '编辑'
+        ),
+        h(
+          NPopconfirm,
+          {
+            onPositiveClick: async () => {
+              const { error } = await deleteCommonUser(row.userId);
+              if (error) return;
+              message.success('删除成功');
+              await refresh();
+            }
+          },
+          {
+            default: () => h('span', '请确定后删除'),
+            trigger: () =>
+              h(
+                NButton,
+                {
+                  text: true,
+                  type: 'error',
+                  bordered: true
+                },
+                { default: () => '删除' }
+              )
           }
-        },
-        {
-          default: () => h('span', '请确定后删除'),
-          trigger: () =>
-            h(
-              NButton,
-              {
-                text: true,
-                type: 'error',
-                bordered: true
-              },
-              { default: () => '删除' }
-            )
-        }
-      );
+        )
+      ]);
     }
   }
 ];
@@ -83,6 +99,10 @@ function getRowKey(row: UserInfo) {
 }
 function handleCheck(keys: string[]) {
   checkedKeys.value = keys;
+}
+function openEdit(info: UserInfo) {
+  showEdit.value = true;
+  currentUser.value = info;
 }
 function openUpload() {
   showUpload.value = true;
@@ -143,6 +163,7 @@ function handleDeleteRowKeys() {
       ></NDataTable>
     </NCard>
     <Add v-model:show="showAdd" @refresh="refresh"></Add>
+    <Edit v-model:show="showEdit" :info="currentUser" @refresh="refresh"></Edit>
     <UploadCommonUser v-model:show="showUpload" @success="refresh"></UploadCommonUser>
   </div>
 </template>

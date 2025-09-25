@@ -1,16 +1,20 @@
 <script setup lang="ts">
 import { h, ref } from 'vue';
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui';
-import { NButton, NPopconfirm, useMessage } from 'naive-ui';
+import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
+import type { RowData } from 'naive-ui/es/data-table/src/interface';
 import { useTable } from '@/hooks/common/table';
 import type { UserInfo } from '@/service/api/user';
 import { deleteAdminUser, fetchAdminUserList } from '@/service/api/user';
 import Search from './_modules/search.vue';
 import Add from './_modules/add.vue';
+import Edit from './_modules/editor.vue';
 
 const message = useMessage();
 const checkedKeys = ref<DataTableRowKey[]>([]);
 const showAdd = ref<boolean>(false);
+const showEdit = ref<boolean>(false);
+const currentUser = ref<UserInfo>({ userId: '', userName: '', name: '', roles: [], status: 0 });
 const useTableColumns: DataTableColumns<UserInfo> = [
   {
     type: 'selection'
@@ -38,30 +42,43 @@ const useTableColumns: DataTableColumns<UserInfo> = [
     width: 100,
     align: 'center',
     render(row: UserInfo) {
-      return h(
-        NPopconfirm,
-        {
-          onPositiveClick: async () => {
-            const { error } = await deleteAdminUser(row.userId);
-            if (error) return;
-            message.success('删除成功');
-            await refresh();
+      return h(NSpace, {}, [
+        h(
+          NButton,
+          {
+            type: 'info',
+            text: true,
+            onClick: () => {
+              openEdit(row);
+            }
+          },
+          '编辑'
+        ),
+        h(
+          NPopconfirm,
+          {
+            onPositiveClick: async () => {
+              const { error } = await deleteAdminUser(row.userId);
+              if (error) return;
+              message.success('删除成功');
+              await refresh();
+            }
+          },
+          {
+            default: () => h('span', '请确定后删除'),
+            trigger: () =>
+              h(
+                NButton,
+                {
+                  text: true,
+                  type: 'error',
+                  bordered: true
+                },
+                { default: () => '删除' }
+              )
           }
-        },
-        {
-          default: () => h('span', '请确定后删除'),
-          trigger: () =>
-            h(
-              NButton,
-              {
-                text: true,
-                type: 'error',
-                bordered: true
-              },
-              { default: () => '删除' }
-            )
-        }
-      );
+        )
+      ]);
     }
   }
 ];
@@ -79,6 +96,10 @@ const { columns, columnChecks, data, loading, getData, searchParams, mobilePagin
 });
 function openAdd() {
   showAdd.value = true;
+}
+function openEdit(info: UserInfo) {
+  showEdit.value = true;
+  currentUser.value = info;
 }
 function getRowKey(row: RowData) {
   return row.userId;
@@ -119,6 +140,7 @@ async function refresh() {
       ></NDataTable>
     </NCard>
     <Add v-model:show="showAdd" @refresh="refresh"></Add>
+    <Edit v-model:show="showEdit" :info="currentUser" @refresh="refresh"></Edit>
   </div>
 </template>
 

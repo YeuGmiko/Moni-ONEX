@@ -28,6 +28,7 @@ interface PutModule {
   label: string;
   name: string;
   bgColor: string;
+  open: boolean;
   remark: string;
 }
 export function updateModule(id: string, body: PutModule) {
@@ -43,6 +44,7 @@ export interface PostModule {
   name: string;
   bgColor: string;
   order: number;
+  open: boolean;
   remark: string;
 }
 export function postModule(body: PostModule) {

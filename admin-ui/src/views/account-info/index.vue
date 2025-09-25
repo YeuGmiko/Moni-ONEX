@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { NButton, NInput, NModal, useMessage } from 'naive-ui';
 import { fetchGetUserInfo } from '@/service/api/auth';
-import { updateUserInfo, updatePassword } from '@/service/api/user';
+import { updatePassword, updateCurrentUserInfo } from '@/service/api/user';
 
 const message = useMessage();
 const userInfo = ref({
@@ -20,12 +20,12 @@ const passwordForm = ref({
 // 获取用户信息
 async function getUserInfo() {
   const { data } = await fetchGetUserInfo();
-  userInfo.value = data;
+  if (data) userInfo.value = data;
 }
 
 // 保存用户信息
 async function handleSave() {
-  const { error } = await updateUserInfo({
+  const { error } = await updateCurrentUserInfo({
     name: userInfo.value.name
   });
   if (error) return;
@@ -59,20 +59,18 @@ getUserInfo();
           <span>{{ userInfo.userName }}</span>
         </div>
         <div class="flex items-center">
-          <span class="w-24 text-left ">密码：</span>
+          <span class="w-24 text-left">密码：</span>
           <span>已设置</span>
-          <NButton text type="primary" class="ml-2 underline" @click="showPasswordModal = true">
-            修改密码
-          </NButton>
+          <NButton text type="primary" class="ml-2 underline" @click="showPasswordModal = true">修改密码</NButton>
         </div>
-        <div class="flex ">
+        <div class="flex">
           <NButton type="primary" @click="handleSave">保存</NButton>
         </div>
       </div>
     </NCard>
 
     <NModal v-model:show="showPasswordModal" title="修改密码">
-      <NCard style="width: 500px" title="修改密码" :bordered="false" size="large">
+      <NCard class="max-w-[500px] w-full" title="修改密码" :bordered="false" size="large">
         <div class="flex flex-col gap-4">
           <div class="flex items-center">
             <span class="w-24">旧密码：</span>

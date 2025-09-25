@@ -29,7 +29,7 @@ export const useAuthStore = defineStore('auth', () => {
         const { data, error } = await fetchUserInfo()
         if (error || !data) {
             /* login failed, to logout */
-            logout()
+            await logout()
             if (indirect) await router.replace({name: ROUTE_NAME.authLogin})
             return error
         }
@@ -73,6 +73,7 @@ export const useAuthStore = defineStore('auth', () => {
         login,
         isLogin,
         setTokenValue,
+        getLoginUser,
         logout,
         setup
     }

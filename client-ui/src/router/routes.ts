@@ -1,12 +1,12 @@
 import type { RouteRecordRaw } from 'vue-router'
-import AuthLogin from '@/views/auth/modules/login.vue'
-import ModuleQuestion from '@/views/question/question.vue'
 
 export const ROUTE_NAME = {
     authLogin: 'auth_login',
+    authRegister: 'auth_register',
     layout: 'layout',
     home: 'home',
-    modules: 'modules'
+    modules: 'modules',
+    userProfile: 'user_profile'
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -21,9 +21,14 @@ export const routes: RouteRecordRaw[] = [
                 component: () => import('@/views/home/index.vue')
             },
             {
+                path: 'profile',
+                name: ROUTE_NAME.userProfile,
+                component: () => import('@/views/userProfile/index.vue'),
+            },
+            {
                 path: 'modules/:id',
                 name: ROUTE_NAME.modules,
-                component: ModuleQuestion,
+                component: () => import('@/views/question/question.vue'),
                 meta: {
                     requireAuth: true
                 }
@@ -37,7 +42,12 @@ export const routes: RouteRecordRaw[] = [
             {
                 path: '',
                 name: ROUTE_NAME.authLogin,
-                component: AuthLogin
+                component: () => import('@/views/auth/modules/login.vue')
+            },
+            {
+                path: '/register',
+                name: ROUTE_NAME.authRegister,
+                component: () => import('@/views/auth/modules/register.vue')
             }
         ]
     },

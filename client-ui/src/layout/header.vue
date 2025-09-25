@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import UserButton from '@/components/common/user-button/user-button.vue'
+import UserButton from '@/components/common/UserMenuButton/user-button.vue'
 </script>
 
 <template>

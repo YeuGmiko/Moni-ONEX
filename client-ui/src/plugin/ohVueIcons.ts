@@ -7,6 +7,7 @@ import * as HeroIcons from 'oh-vue-icons/icons/hi'
 import * as LineAwesome from 'oh-vue-icons/icons/la'
 import * as RemixIcon from 'oh-vue-icons/icons/ri'
 import * as FlatColorIcons from 'oh-vue-icons/icons/fc'
+import * as SimpleIcons from 'oh-vue-icons/icons/si'
 
 
 
@@ -19,4 +20,5 @@ export function setupOhVueIcons() {
     addIcons(...Object.values(LineAwesome))
     addIcons(...Object.values(RemixIcon))
     addIcons(...Object.values(FlatColorIcons))
+    addIcons(...Object.values(SimpleIcons))
 }

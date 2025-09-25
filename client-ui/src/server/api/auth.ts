@@ -13,6 +13,11 @@ export interface RegisterBody {
     password: string
 }
 
+export interface UpdatePasswordBody {
+    oldPassword: string
+    newPassword: string
+}
+
 export function fetchLogout() {
     return request({
         url: '/auth/logout',
@@ -40,5 +45,13 @@ export function fetchUserInfo() {
     return request<UserInfo>({
         url: '/auth/info',
         method: 'GET',
+    })
+}
+
+export function updatePassword(body: UpdatePasswordBody) {
+    return request({
+        url: '/auth/password',
+        method: 'PUT',
+        data: body
     })
 }

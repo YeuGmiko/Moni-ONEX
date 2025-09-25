@@ -141,7 +141,7 @@ function close() {
 </script>
 
 <template>
-  <div class="m-2 rounded-1 bg-white">
+  <div class="m-2 rounded-1">
     <NLayout class="h-full" has-sider>
       <NLayoutSider
         width="40%"

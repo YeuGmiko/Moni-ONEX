@@ -166,13 +166,9 @@ watch(question, async question => {
     })
   }, {})
 })
-/* 页面更换 / 刷新的时候，触发题目信息获取*/
-import { nextTick } from 'vue'
 
-watch(route, async () => {
-  await nextTick()
-  init()
-})
+/* 页面更换 / 刷新的时候，触发题目信息获取*/
+watch(route, init)
 /* 检测是否已经提交，若提交则重新渲染表单 */
 watch(isSubmit, isSubmit => {
   if (!isSubmit || !question.value) return

@@ -36,7 +36,7 @@ async function fetchOrders(p?: number) {
 }
 
 function handlerOrderClick(order?: OrderProperties) {
-  if (!order || currentOrder.value === order?.order) return
+  if (!order) return
   emit('choose', order)
 }
 
@@ -52,12 +52,7 @@ watch(currentOrder, async () => {
   page.value = newPage
   handlerOrderClick(orders.value.find(o => o.order === currentOrder.value))
 }, { immediate: true })
-
-/* 修得最无语的一次，小朋友千万不要学哦 */
-setTimeout(() => {
-  fetchOrders()
-  watch(page, fetchOrders)
-}, 100)
+fetchOrders()
 </script>
 
 <template>

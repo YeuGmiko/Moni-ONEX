@@ -68,3 +68,9 @@ export interface PostQuestionOption {
     orderNo: number
     answer: string
 }
+export interface RankInfo {
+    order: number
+    nickname: string
+    submits: number
+    acCount: number
+}

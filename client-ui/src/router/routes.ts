@@ -1,12 +1,15 @@
 import type { RouteRecordRaw } from 'vue-router'
 
 export const ROUTE_NAME = {
+    /* auth */
     authLogin: 'auth_login',
     authRegister: 'auth_register',
+    /* layouts */
     layout: 'layout',
     home: 'home',
     modules: 'modules',
-    userProfile: 'user_profile'
+    userProfile: 'user_profile',
+    rank: 'rank'
 }
 
 export const routes: RouteRecordRaw[] = [
@@ -32,6 +35,11 @@ export const routes: RouteRecordRaw[] = [
                 meta: {
                     requireAuth: true
                 }
+            },
+            {
+                path: 'rank',
+                name: ROUTE_NAME.rank,
+                component: () => import('@/views/rank/index.vue'),
             }
         ]
     },

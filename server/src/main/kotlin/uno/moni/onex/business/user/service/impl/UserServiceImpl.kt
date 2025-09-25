@@ -71,6 +71,7 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         vo.userId = user.id.toString()
         vo.name = user.name
         vo.userName = user.userName
+        vo.status = user.status
         vo.roles = user.userType?.let { mutableListOf(UserTypeEnums.getRoleName(it)) } ?: mutableListOf()
         return vo
     }
@@ -118,14 +119,14 @@ class UserServiceImpl: UserService, BaseServiceImpl<UserMapper, User>() {
         /* check permission */
         if ((operator.userType ?: UserTypeEnums.COMMON_USER.type) >= (user.userType ?: UserTypeEnums.COMMON_USER.type)) throw RuntimeException("无操作该对象的权限")
         /* check userName */
-        if (update.userName != null && !update.userName.equals(user.userName)) {
+        if (update.userName != null && !update.userName.equals("") && !update.userName.equals(user.userName)) {
             if (exists(KtQueryWrapper(User::class.java).eq(User::userName, update.userName)))
                 throw RuntimeException("注册用户名[userName=${update.userName}]已存在")
             user.userName = update.userName
         }
         /* update */
-        if (update.name != null) user.name = update.name
-        if (update.password != null) user.hashPassword = SecureUtil.md5(update.password)
+        if (update.name != null && !update.name.equals("")) user.name = update.name
+        if (update.password != null && !update.password.equals("")) user.hashPassword = SecureUtil.md5(update.password)
         if (!updateById(user)) throw RuntimeException("用户更新信息失败")
     }
 

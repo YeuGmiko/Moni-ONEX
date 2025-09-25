@@ -42,14 +42,4 @@ class UseController(
         return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "用户信息更改成功")
     }
 
-    @SaCheckLogin
-    @Operation(summary = "更改当前用户密码")
-    @PutMapping("/auth/password")
-    fun updateUserPassword(
-        @RequestBody update: UpdateUserAuthPassword
-    ): Response<Unit> {
-        val userId = StpUtil.getLoginId().toString()
-        userService.updatePassword(userId, update)
-        return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "用户密码更改成功")
-    }
 }

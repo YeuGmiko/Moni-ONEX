@@ -124,7 +124,7 @@ class UserController(
             Parameter(name = "type", description = "1为封禁，0为解禁", required = false)
         ]
     )
-    @GetMapping("/ban/{id}")
+    @PutMapping("/ban/{id}")
     fun changeUserBan(
         @PathVariable("id") userId: String,
         @RequestParam("type", defaultValue = "1") type: Int

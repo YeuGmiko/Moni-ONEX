@@ -4,11 +4,10 @@ import cn.dev33.satoken.annotation.SaCheckDisable
 import cn.dev33.satoken.annotation.SaCheckLogin
 import cn.dev33.satoken.stp.StpUtil
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -19,6 +18,7 @@ import uno.moni.onex.business.auth.pojo.dto.UserLoginBody
 import uno.moni.onex.business.auth.pojo.vo.LoginUser
 import uno.moni.onex.business.auth.service.LoginService
 import uno.moni.onex.business.user.enums.UserTypeEnums
+import uno.moni.onex.business.user.pojo.dto.UpdateUserAuthPassword
 import uno.moni.onex.business.user.service.UserService
 import uno.moni.onex.core.enums.ResponseCodeEnums
 import uno.moni.onex.core.pojo.vo.Response
@@ -74,5 +74,16 @@ class AuthController(
         if (user == null) {
             throw RuntimeException("该用户[${userId}]不存在")
         } else return Response.Companion.success().data(userService.toVo(user))
+    }
+
+    @SaCheckLogin
+    @Operation(summary = "更改当前用户密码")
+    @PutMapping("/password")
+    fun updateUserPassword(
+        @RequestBody update: UpdateUserAuthPassword
+    ): Response<Unit> {
+        val userId = StpUtil.getLoginId().toString()
+        userService.updatePassword(userId, update)
+        return Response.success(ResponseCodeEnums.SUCCESS_NO_CONTENT.code, "用户密码更改成功")
     }
 }

@@ -21,7 +21,6 @@ import LayoutHeader from './header.vue'
 </template>
 
 <style scoped>
-
 /* RouterView Transition */
 .layout-page-transition-enter-active, .layout-page-transition-leave-active {
   transition: opacity .15s ease-in-out;

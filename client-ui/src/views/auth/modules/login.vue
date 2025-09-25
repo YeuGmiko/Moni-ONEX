@@ -2,12 +2,11 @@
 import Image from '/images/wechat-code.jpg'
 import type { FormRules, FormInst } from 'naive-ui'
 import { useRouter, useRoute } from 'vue-router'
-import {onBeforeMount, reactive, ref} from 'vue'
+import {reactive, ref} from 'vue'
 import { OhVueIcon } from 'oh-vue-icons'
 import { useMessage } from 'naive-ui'
 import {useAuthStore} from '@/store/authStore'
 import {ROUTE_NAME} from '@/router/routes'
-import {storeToRefs} from 'pinia'
 
 interface Model {
   userName: string,

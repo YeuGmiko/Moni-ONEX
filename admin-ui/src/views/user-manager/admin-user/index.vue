@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { h, ref } from 'vue';
 import type { DataTableColumns, DataTableRowKey } from 'naive-ui';
-import { NButton, NPopconfirm, NSpace, useMessage } from 'naive-ui';
+import { NButton, NPopconfirm, NSpace, NSwitch, useMessage } from 'naive-ui';
 import type { RowData } from 'naive-ui/es/data-table/src/interface';
 import { useTable } from '@/hooks/common/table';
 import type { UserInfo } from '@/service/api/user';
-import { deleteAdminUser, fetchAdminUserList } from '@/service/api/user';
-import Search from './_modules/search.vue';
+import { deleteAdminUser, fetchAdminUserList, updateUserBan } from '@/service/api/user';
+// import Search from './_modules/search.vue';
 import Add from './_modules/add.vue';
 import Edit from './_modules/editor.vue';
 
@@ -35,6 +35,26 @@ const useTableColumns: DataTableColumns<UserInfo> = [
     key: 'userName',
     title: '用户名',
     align: 'center'
+  },
+  {
+    key: 'status',
+    title: '封禁状态',
+    render(row: UserInfo) {
+      return h(
+        NSwitch,
+        {
+          value: row.status === 1,
+          disabled: row.status === 0,
+          onUpdateValue: async (check: boolean) => {
+            const { error } = await updateUserBan(row.userId, !check);
+            if (error) return;
+            message.success(check ? '解封成功' : '封禁成功');
+            await refresh();
+          }
+        },
+        { checked: () => '正常', unchecked: () => (row.status === 0 ? '不可用' : '封禁') }
+      );
+    }
   },
   {
     key: 'op',
@@ -82,7 +102,7 @@ const useTableColumns: DataTableColumns<UserInfo> = [
     }
   }
 ];
-const { columns, columnChecks, data, loading, getData, searchParams, mobilePagination } = useTable<UserInfo>({
+const { columns, columnChecks, data, loading, getData } = useTable<UserInfo>({
   columns: () => useTableColumns,
   apiFn: fetchData,
   immediate: true,
@@ -123,7 +143,7 @@ async function refresh() {
 
 <template>
   <div class="flex flex-col gap-y-3">
-<!--    <Search v-model:value="searchParams"></Search>-->
+    <!--    <Search v-model:value="searchParams"></Search>-->
     <NCard title="用户列表" class="flex-grow">
       <template #header-extra>
         <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @add="openAdd" @refresh="getData" />
@@ -132,7 +152,6 @@ async function refresh() {
         size="small"
         class="h-full"
         :columns="columns"
-        :pagination="mobilePagination"
         :data="data"
         :loading="loading"
         :row-key="getRowKey"

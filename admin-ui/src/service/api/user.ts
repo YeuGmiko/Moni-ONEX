@@ -104,12 +104,12 @@ export function updatePassword(body: UpdatePassword) {
   });
 }
 
-export function bannerUser(id: string, banner: boolean) {
+export function updateUserBan(id: string, ban: boolean) {
   return request({
     url: `/admin/users/ban/${id}`,
     method: 'PUT',
     params: {
-      type: banner ? 1 : 0
+      type: ban ? 1 : 0
     }
   });
 }

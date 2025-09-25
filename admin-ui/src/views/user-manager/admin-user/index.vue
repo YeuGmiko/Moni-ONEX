@@ -123,7 +123,7 @@ async function refresh() {
 
 <template>
   <div class="flex flex-col gap-y-3">
-    <Search v-model:value="searchParams"></Search>
+<!--    <Search v-model:value="searchParams"></Search>-->
     <NCard title="用户列表" class="flex-grow">
       <template #header-extra>
         <TableHeaderOperation v-model:columns="columnChecks" :loading="loading" @add="openAdd" @refresh="getData" />

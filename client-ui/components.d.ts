@@ -15,6 +15,7 @@ declare module 'vue' {
     NCard: typeof import('naive-ui')['NCard']
     NCheckbox: typeof import('naive-ui')['NCheckbox']
     NConfigProvider: typeof import('naive-ui')['NConfigProvider']
+    NDataTable: typeof import('naive-ui')['NDataTable']
     NForm: typeof import('naive-ui')['NForm']
     NFormItem: typeof import('naive-ui')['NFormItem']
     NImage: typeof import('naive-ui')['NImage']
@@ -31,7 +32,7 @@ declare module 'vue' {
     RouterView: typeof import('vue-router')['RouterView']
     RuleView: typeof import('./src/components/common/RuleView/RuleView.vue')['default']
     TaskButton: typeof import('./src/components/common/task-button.vue')['default']
-    UserButton: typeof import('./src/components/common/UserMenuButton/user-button.vue')['default']
-    UserOperationList: typeof import('./src/components/common/UserMenuButton/user-operation-list.vue')['default']
+    UserButton: typeof import('./src/components/app/UserMenuButton/user-button.vue')['default']
+    UserOperationList: typeof import('./src/components/app/UserMenuButton/user-operation-list.vue')['default']
   }
 }

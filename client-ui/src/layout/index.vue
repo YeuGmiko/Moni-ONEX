@@ -14,9 +14,9 @@ import LayoutHeader from './header.vue'
           </RouterView>
       </div>
     </NScrollbar>
-    <div class="absolute self-center bottom-0 p-1 text-center text-gray-500 text-[0.5rem]">
-      Website Powered By <a href="https://github.com/YeuGmiko" target="_blank">葉羽.Gmiko</a>
-    </div>
+<!--    <div class="absolute self-center bottom-0 p-1 text-center text-gray-500 text-[0.5rem]">-->
+<!--      Website Powered By <a href="https://github.com/YeuGmiko" target="_blank">葉羽.Gmiko</a>-->
+<!--    </div>-->
   </div>
 </template>
 

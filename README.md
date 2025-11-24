@@ -8,8 +8,17 @@ ONEX是一个web应用，起初用于给老师为学生备考，所做的刷题�
 - 每日排名和总排名
 - 题目和学生的批量导入（纯文本）
 
+# 初始超管登录信息
+
+用户名：SUPER_ADMIN
+密码：SUPER_ADMIN
+
 # 预览地址
+
 [点击跳转](https://onex.moni.uno/)
+
+> 测试用户名：welcome
+> 测试用户密码：welcome
 
 # 截图（用户端）
 

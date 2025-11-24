@@ -98,7 +98,7 @@ export function updateCurrentUserInfo(body: { name: string }) {
 
 export function updatePassword(body: UpdatePassword) {
   return request({
-    url: '/users/auth/password',
+    url: '/auth/password',
     method: 'PUT',
     data: body
   });
